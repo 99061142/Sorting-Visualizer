@@ -16,30 +16,21 @@ class ListSettings extends List {
         this.windowSizeEvent();
         
         // When page is loaded
-        this.setRandomList(); // Create random list
-        this.sizeSlider.max = window.innerWidth; // Set max size value to the width of the window
+        this.updateList(); // Create random list
+        this.maxValuelistSizeValue = window.innerWidth; // Set max size value to the width of the window
     }
-
-    get listSizeValue() {
-        return Number(this.sizeSlider.value);
-    }
-
-    set listSizeValue(value) {
-        this.listSize = Number(value);
-    }    
 
     sizeSliderEvent() {
         // when user releases the slider
         this.sizeSlider.addEventListener('mouseup', () => {
-            this.listSizeValue = this.sizeSlider.value;
-            this.setRandomList();
+            this.updateList();
         });
     }
 
     newArrayButtonEvent() {
         // Generate new array
         this.newArray.addEventListener('click', () => {
-            this.setRandomList();
+            this.updateList();
         });
     }
 
@@ -52,7 +43,7 @@ class ListSettings extends List {
 
     windowSizeEvent() {
         window.addEventListener('resize', () => {
-            this.sizeSlider.max = window.innerWidth; // Set max size value to the width of the window
+            this.maxValue = window.innerWidth; // Set max size value to the width of the window
             this.resizeList(); // Delete values out of list when window size is decreased
             this.resizeListValues(); // resize list values on the screen based on the new width of the screen
         });
