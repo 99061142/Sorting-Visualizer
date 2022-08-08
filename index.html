@@ -1,40 +1,50 @@
 <!DOCTYPE html>
 <html lang="en">
     <head>
-        <meta charset="UTF-8">
-        <meta http-equiv="X-UA-Compatible" content="IE=edge">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta charset="UTF-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
         <title>Sort list</title>
 
         <!-- Bootstrap -->
         <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
         <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/js/bootstrap.min.js" integrity="sha384-B0UglyR+jN6CkvvICOB2joaf5I4l3gm9GU6Hc1og6Ls7i6U/mkkaduKaBhlAXv9k" crossorigin="anonymous"></script>
-        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css" integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS" crossorigin="anonymous"/>
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css" integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS" crossorigin="anonymous" />
         <!-- /Bootstrap -->
 
         <!-- Custom JS -->
         <script src="js/setList.js" defer></script>
 
         <!-- Custom CSS -->
-        <link rel="stylesheet" href="css/styling.css">
+        <link rel="stylesheet" href="css/styling.css" />
     </head>
     <body>
-        <div class="container m-0">
+        <div class="container">
             <div class="row">
-                <div class="col-3">
-                    <button id="newArray" class="d-block">Generate new array</button>
-                    <button id="sortArray" class="d-block">Sort array</button>
+                <div class="col-3" style="border-color: black !important; border-width: thick !important;">
+                    <button class="button-as-text text-left mb-2" id="newArray">Generate new array</button>
+                    <button class="d-block button-as-text text-left" id="sortArray">Sort array</button>
                 </div>
 
-                <div class="col-7">
-                    <div class="d-flex">
-                        <label class="mb-0 mr-3" for="listSortingSpeed">Sorting speed</label>
-                        <input type="range" min="1" max="100" value="50" id="listSortingSpeed" />
+                <div class="col-7 border-left border-right" style="border-color: black !important; border-width: thick !important;">
+                    <div class="row d-flex justify-content-center">
+                        <div class="col-sm-12 col-md-6 col-lg-3">
+                            <label class="d-block" for="listSortingSpeed">Sorting speed</label>
+                            <input type="range" min="1" max="100" value="50" id="listSortingSpeed" />
+                        </div>
+                        <div class="col-sm-12 col-md-6 col-lg-3">
+                            <label class="d-block" for="listSize">List size</label>
+                            <input type="range" min="1" max="100" value="50" id="listSize" />
+                        </div>    
                     </div>
-                    <div class="d-flex">
-                        <label class="mb-0 mr-3" for="listSize">List size</label>
-                        <input type="range" min="1" max="100" value="50" id="listSize" />
-                    </div>
+                </div>              
+                
+                <div class="col-2">
+                    <label for="algorithms">Algorithm:</label>
+                    <select id="algorithms">
+                        <option value="test1">test1</option>
+                        <option value="test2">test2</option>
+                    </select>
                 </div>
             </div>
         </div>
