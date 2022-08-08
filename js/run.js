@@ -1,6 +1,18 @@
+import { SelectionSort } from "./algorithms/selectionSort.js";
+
 export class Run {
     constructor() {
         this.running = false;
+    }
+
+    get algorithmClass() {
+        switch(this.algorithm) {
+            case "selection-sort":
+                return new SelectionSort(this.list, this.sorted.bind(this));
+            default:
+                console.warn(`Algorithm '${this.algorithm}' not found`);
+                return null;
+        }
     }
 
     get algorithm() {
@@ -10,6 +22,12 @@ export class Run {
     run() {
         this.running = true;
         this.toggleSettings();
+
+        if(this.algorithmClass != null) {
+            this.algorithmClass.run();
+        }else{
+            this.sorted();
+        }
     }
 
     sorted() {
