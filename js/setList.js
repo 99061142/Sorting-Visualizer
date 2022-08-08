@@ -5,7 +5,7 @@ class RunList {
 
     run() {
         this.runButton.disabled = true;
-        
+        this.sizeSlider.disabled = true;
         this.algorithmsOptions.disabled = true;
     }
 
