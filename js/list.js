@@ -19,6 +19,10 @@ export class List extends Run {
         return Number(this.sizeSlider.min);
     }
 
+    set currentValue(value) {
+        this.sizeSlider.value = value;
+    }
+
     get currentValue() {
         return Number(this.sizeSlider.value);
     }
@@ -51,7 +55,16 @@ export class List extends Run {
         return this.listDiv.children;
     }
 
+    deleteList() {
+        // Delete all children from the list div
+        while(this.listDiv.firstChild) {
+            this.listDiv.removeChild(this.listDiv.firstChild);
+        }
+        this.randomList = [];
+    }
+
     updateList() {
+        this.deleteList();
         let list = this.randomList;
         this.randomList = list;
         this.windowList = list;
@@ -65,7 +78,7 @@ export class List extends Run {
 
     resizeListValues() {
         // resize every child based on the width of the screen
-        for(let child of this.listDiv.children) {
+        for(let child of this.windowList) {
             child.style.width = this.sizeWidth;
         }
     }

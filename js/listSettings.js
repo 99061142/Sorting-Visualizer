@@ -16,8 +16,8 @@ class ListSettings extends List {
         this.windowSizeEvent();
         
         // When page is loaded
+        this.maxValue = window.innerWidth; // Set max size value to the width of the window
         this.updateList(); // Create random list
-        this.maxValuelistSizeValue = window.innerWidth; // Set max size value to the width of the window
     }
 
     sizeSliderEvent() {
