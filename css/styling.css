@@ -10,3 +10,11 @@
     background-color: blue;
     vertical-align: top;
 }
+
+#run {
+    color: green;
+}
+
+#run[disabled] {
+    color: red;
+}
