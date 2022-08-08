@@ -4,7 +4,11 @@ class RunList {
     }
 
     run() {
-        
+        this.runButton.disabled = true;
+    }
+
+    sorted() {
+        this.runButton.disabled = false;
     }
 }
 
@@ -76,9 +80,7 @@ class SetList extends RunList {
     showList() {
         // if list div isn't empty, delete every child inside the list div
         this.deleteListShow();
-
         this.createListShow();
-        console.log(this.sizeSlider.max)
     }
 
     resizeList() {
@@ -96,7 +98,7 @@ class ListSettings extends SetList {
         this.listSize = Number(this.sizeSlider.value);
         this.newArray = document.getElementById('newArray');
         this.algorithmsOptions = document.getElementById("algorithms");
-        this.sortArray = document.getElementById('sortArray');
+        this.runButton = document.getElementById('run');
 
         this.settingListeners();
         this.setRandomList();
@@ -130,7 +132,7 @@ class ListSettings extends SetList {
 
     sortArrayListener() {
         // Run array    
-        this.sortArray.addEventListener('click', () => {
+        this.runButton.addEventListener('click', () => {
             this.run();
         });
     }
