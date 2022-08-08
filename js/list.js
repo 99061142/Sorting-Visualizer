@@ -16,7 +16,7 @@ export class List extends Run {
         let list = [];
 
         for(let i = 0; i < this.listSizeValue; i++) {
-            let random_num = Math.floor(Math.random() * 100);
+            let random_num = Math.floor(Math.random() * 600);
 
             if(random_num == 0) { random_num = 1; }
             list.push(random_num);
@@ -72,7 +72,7 @@ export class List extends Run {
 
     resizeList() {
         while(this.list.length > this.sizeSlider.value) {
-            this.list.pop() // remove last value
+            this.list.pop(); // remove last value
             this.listDiv.removeChild(this.listDiv.lastChild); // remove last child 
         }
     }
