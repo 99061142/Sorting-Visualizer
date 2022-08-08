@@ -1,15 +1,15 @@
 # List sorting website
 
 ## How to use it
-* Choose the sorting speed (it CAN be used while running).
-* Choose the list size (it CAN'T be used while running).
-* Choose the algorithm to sort the list (it CAN'T be used while running).
+* Choose the sorting speed (it CAN be changed while running).
+* Choose the list size (it CAN'T be changed while running).
+* Choose the algorithm to sort the list (it CAN'T be changed while running).
 
 ## What can you do
-* Choose the sorting speed (it CAN be used while running).
-* Choose the list size (it CAN'T be used while running).
-* Choose the algorithm to sort the list (it CAN'T be used while running).
-* Generate a new list with the current size (it CAN'T be used while running).
+* Choose the sorting speed (it CAN be changed while running).
+* Choose the list size (it CAN'T be changed while running).
+* Choose the algorithm to sort the list (it CAN'T be changed while running).
+* Generate a new list with the current size (it CAN'T be changed while running).
 
 ## Algorithms
 ### Working
