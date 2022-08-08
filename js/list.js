@@ -15,7 +15,7 @@ export class List extends Run {
     get randomList() {
         let list = [];
 
-        for(let i = 0; i < this.listSize; i++) {
+        for(let i = 0; i < this.listSizeValue; i++) {
             let random_num = Math.floor(Math.random() * 100);
 
             if(random_num == 0) { random_num = 1; }
