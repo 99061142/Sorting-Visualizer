@@ -160,6 +160,7 @@ class ListSettings extends SetList {
 
     toggleSettings() {
         this.sizeSlider.disabled = this.running;
+        this.newArray.disabled = this.running;
         this.algorithmsOptions.disabled = this.running;
         this.runButton.disabled = this.running;
     }
