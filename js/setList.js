@@ -19,6 +19,7 @@ class SetList extends RunList {
     setRandomList() {
         this.list = this.randomList;
         this.showList();
+        console.log(this.list)
     }
 
     get randomList() {
@@ -96,8 +97,8 @@ class ListSettings extends SetList {
     }    
 
     listSizeListener() {
-        // when value changes
-        this.sizeSlider.addEventListener('input', () => {
+        // when user releases the slider
+        this.sizeSlider.addEventListener('mouseup', () => {
             this.listSizeValue = this.sizeSlider.value;
             this.setRandomList();
         });
