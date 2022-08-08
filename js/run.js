@@ -9,11 +9,11 @@ export class Run {
 
     run() {
         this.running = true;
-        this.toggleSettings()
+        this.toggleSettings();
     }
 
     sorted() {
         this.running = false;
-        this.toggleSettings()
+        this.toggleSettings();
     }
 }

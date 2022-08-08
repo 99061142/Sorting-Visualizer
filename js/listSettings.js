@@ -66,4 +66,4 @@ class ListSettings extends List {
         this.runButton.disabled = this.running;
     }
 }
-new ListSettings()
+new ListSettings();
