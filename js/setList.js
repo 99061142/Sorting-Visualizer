@@ -1,16 +1,20 @@
 class RunList {
+    constructor() {
+        this.running = false;
+    }
+
     get algorithm() {
         return this.algorithmsOptions.value;
     }
 
     run() {
-        this.runButton.disabled = true;
-        this.sizeSlider.disabled = true;
-        this.algorithmsOptions.disabled = true;
+        this.running = true;
+        this.toggleSettings()
     }
 
     sorted() {
-        this.runButton.disabled = false;
+        this.running = false;
+        this.toggleSettings()
     }
 }
 
@@ -152,6 +156,12 @@ class ListSettings extends SetList {
             this.resizeList(); // resize list length based on the new width of the screen
             this.resizeListValues(); // resize list values on the screen based on the new width of the screen
         });
+    }
+
+    toggleSettings() {
+        this.sizeSlider.disabled = this.running;
+        this.algorithmsOptions.disabled = this.running;
+        this.runButton.disabled = this.running;
     }
 }
 new ListSettings()
