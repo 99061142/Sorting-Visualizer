@@ -1,5 +1,17 @@
-class SetList {
+class RunList {
+    get algorithm() {
+        return this.algorithmsOptions.value;
+    }
+
+    run() {
+        
+    }
+}
+
+
+class SetList extends RunList {
     constructor() {
+        super();
         this.list = [];
     }
 
@@ -18,6 +30,8 @@ class ListSettings extends SetList {
         this.sizeSlider = document.getElementById('listSize');
         this.listSize = Number(this.sizeSlider.value);
         this.newArray = document.getElementById('newArray');
+        this.algorithmsOptions = document.getElementById("algorithms");
+        this.sortArray = document.getElementById('sortArray');
 
         this.settingListeners();
     }
@@ -45,9 +59,17 @@ class ListSettings extends SetList {
         });
     }
 
+    sortArrayListener() {
+        // Run array    
+        this.sortArray.addEventListener('click', () => {
+            this.run();
+        });
+    }
+
     settingListeners() {
         this.listSizeListener();
         this.newArrayListener();
+        this.sortArrayListener();
     }
 }
 new ListSettings()
