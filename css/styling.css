@@ -5,3 +5,9 @@
     padding:0;
     cursor: pointer;
 }
+
+#list-value {
+    display: inline-block;
+    background-color: blue;
+    vertical-align: top;
+}
