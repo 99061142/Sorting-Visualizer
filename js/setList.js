@@ -16,8 +16,10 @@ class ListSettings extends SetList {
     constructor() {
         super();
         this.sizeSlider = document.getElementById('listSize');
-        this.listSize = null;
-        this.listSizeListener();
+        this.listSize = Number(this.sizeSlider.value);
+        this.newArray = document.getElementById('newArray');
+
+        this.settingListeners();
     }
 
     get listSizeValue() {
@@ -34,6 +36,18 @@ class ListSettings extends SetList {
             this.listSizeValue = this.sizeSlider.value;
             this.setRandomList();
         });
+    }
+
+    newArrayListener() {
+        // Generate new array
+        this.newArray.addEventListener('click', () => {
+            this.setRandomList();
+        });
+    }
+
+    settingListeners() {
+        this.listSizeListener();
+        this.newArrayListener();
     }
 }
 new ListSettings()
