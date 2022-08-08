@@ -6,8 +6,7 @@
     cursor: pointer;
 }
 
-#list-value {
-    display: inline-block;
+#list > div {
     background-color: blue;
     vertical-align: top;
 }
