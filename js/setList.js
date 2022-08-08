@@ -5,6 +5,8 @@ class RunList {
 
     run() {
         this.runButton.disabled = true;
+        
+        this.algorithmsOptions.disabled = true;
     }
 
     sorted() {
@@ -98,7 +100,7 @@ class ListSettings extends SetList {
         this.listSize = Number(this.sizeSlider.value);
         this.newArray = document.getElementById('newArray');
         this.algorithmsOptions = document.getElementById("algorithms");
-        this.runButton = document.getElementById('run');
+        this.runButton = document.getElementById('run-button');
 
         this.settingListeners();
         this.setRandomList();

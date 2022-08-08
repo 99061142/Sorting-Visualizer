@@ -18,3 +18,7 @@
 #run-button[disabled] {
     color: red;
 }
+
+#algorithms[disabled] {
+    color: red;
+}
