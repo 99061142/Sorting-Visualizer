@@ -11,10 +11,10 @@
     vertical-align: top;
 }
 
-#run {
+#run-button {
     color: green;
 }
 
-#run[disabled] {
+#run-button[disabled] {
     color: red;
 }
