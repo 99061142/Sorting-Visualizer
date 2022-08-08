@@ -19,7 +19,6 @@ class SetList extends RunList {
     setRandomList() {
         this.list = this.randomList;
         this.showList();
-        console.log(this.list)
     }
 
     get randomList() {
@@ -58,10 +57,19 @@ class SetList extends RunList {
             // add each value to the list
             let div = document.createElement('div');
 
-            div.id = "list-value"
             div.style.height = `${value}px`;
             div.style.width = this.sizeWidth();
             this.listDiv.appendChild(div);
+        }
+    }
+
+    resizeListValues() {
+        // get every list div child
+        let listDivChildren = this.listDiv.children;
+        
+        // resize every child
+        for(let child of listDivChildren) {
+            child.style.width = this.sizeWidth();
         }
     }
 
@@ -70,6 +78,14 @@ class SetList extends RunList {
         this.deleteListShow();
 
         this.createListShow();
+        console.log(this.sizeSlider.max)
+    }
+
+    resizeList() {
+        while(this.list.length > this.sizeSlider.value) {
+            this.list.pop() // remove last value
+            this.listDiv.removeChild(this.listDiv.lastChild); // remove last child 
+        }
     }
 }
 
@@ -123,6 +139,15 @@ class ListSettings extends SetList {
         this.listSizeListener();
         this.newArrayListener();
         this.sortArrayListener();
+        this.windowSizeListener();
+    }
+
+    windowSizeListener() {
+        window.addEventListener('resize', () => {
+            this.sizeSlider.max = window.innerWidth;
+            this.resizeList(); // resize list length based on the new width of the screen
+            this.resizeListValues(); // resize list values on the screen based on the new width of the screen
+        });
     }
 }
 new ListSettings()
