@@ -1,27 +1,42 @@
-import { callAlgorithmClass } from "./callAlgorithmClass.js";
+import { SelectionSort } from "../algorithms/selectionSort.js";
 
-export class Run extends callAlgorithmClass {
+
+export class Run {
     constructor() {
-        super();
         this.running = false;
     }
 
+    get algorithmClass() {
+        switch(this.algorithm) {
+            case "selection-sort":
+                return new SelectionSort(this.list);
+            default:
+                return null;
+        }
+    }
+
     get algorithm() {
-        return this.algorithmsOptions.value;
+        return this.algorithmOptions.value;
     }
 
     run() {
         this.running = true;
         this.toggleSettings();
 
+        // If algorithm class is not null, run the algorithm and return sorted list
         if(this.algorithmClass != null) {
-            this.algorithmClass.run();
-        }else{
-            this.sorted();
+            return this.algorithmClass.run().then((list) => {
+                this.done();
+                return list;
+            });
+        }else {
+            console.warn(`Algorithm '${this.algorithm}' not found`);
+            this.done();
         }
+        return null;
     }
 
-    sorted() {
+    done() {
         this.running = false;
         this.toggleSettings();
     }
