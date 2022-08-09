@@ -68,13 +68,9 @@ export class UpdateBoardList {
         this.setChildBackgroundColor(i, color);
     }
 
-    isSmallest(i) {
-        return this.smallestIndex == i;
-    }
-
     smallest(i) { 
         // Set child to smallest and save child value when the child value is smaller than the current smallest value
-        if(this.smallestIndex && !this.isSmallest(i)) { 
+        if(this.smallestIndex) { 
             this.next(this.smallestIndex); 
         }
         this.smallestIndex = i;
