@@ -13,7 +13,7 @@
 
 ## Algorithms
 ### Working
-* None
+* Selection sort (time complexity: O(n2))
 
 ### Not working
 * None
