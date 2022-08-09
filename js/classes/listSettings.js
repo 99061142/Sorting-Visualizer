@@ -1,12 +1,12 @@
 import { List } from './list.js';
 
-class ListSettings extends List {
+export class ListSettings extends List {
     constructor() {
         super();
         // Attributes
         this.sizeSlider = document.getElementById('listSize');
         this.newArray = document.getElementById('newArray');
-        this.algorithmsOptions = document.getElementById("algorithms");
+        this.algorithmOptions = document.getElementById("algorithms");
         this.runButton = document.getElementById('run-button');
 
         // Add event listeners
@@ -53,7 +53,7 @@ class ListSettings extends List {
         // Disable or enable setting attributes when run button is clicked
         this.sizeSlider.disabled = this.running;
         this.newArray.disabled = this.running;
-        this.algorithmsOptions.disabled = this.running;
+        this.algorithmOptions.disabled = this.running;
         this.runButton.disabled = this.running;
     }
 }
