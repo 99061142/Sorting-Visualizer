@@ -1,18 +1,9 @@
-import { SelectionSort } from "./algorithms/selectionSort.js";
+import { callAlgorithmClass } from "./callAlgorithmClass.js";
 
-export class Run {
+export class Run extends callAlgorithmClass {
     constructor() {
+        super();
         this.running = false;
-    }
-
-    get algorithmClass() {
-        switch(this.algorithm) {
-            case "selection-sort":
-                return new SelectionSort(this.list, this.sorted.bind(this));
-            default:
-                console.warn(`Algorithm '${this.algorithm}' not found`);
-                return null;
-        }
     }
 
     get algorithm() {
