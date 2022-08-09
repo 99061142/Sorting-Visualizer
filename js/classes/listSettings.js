@@ -36,9 +36,9 @@ export class ListSettings extends List {
 
     runButtonEvent() {
         // Run array    
-        this.runButton.addEventListener('click', () => {
+        this.runButton.onclick = () => {
             this.run();
-        });
+        }
     }
 
     windowSizeEvent() {
