@@ -1,11 +1,9 @@
 export class SelectionSort {
-    constructor(list, callback) {
+    constructor(list) {
         this.list = list;
-        this.callback = callback;
     }
 
-
-    run() {
+    async run() {
         // For every number in the list
         for(let i = 0; i < this.list.length; i++) {
             let currentNumber = this.list[i];
@@ -31,6 +29,6 @@ export class SelectionSort {
                 this.list[smallestNumberIndex] = currentNumber;
             }
         }
-        this.callback();
+        return this.list;
     }
 }
