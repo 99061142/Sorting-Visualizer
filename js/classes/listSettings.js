@@ -43,6 +43,7 @@ export class ListSettings extends List {
 
     windowSizeEvent() {
         window.addEventListener('resize', () => {
+            if(this.running) { return; }
             this.maxValue = window.innerWidth; // Set max size value to the width of the window
             this.resizeList(); // Delete values out of list when window size is decreased
             this.resizeListValues(); // resize list values on the screen based on the new width of the screen
