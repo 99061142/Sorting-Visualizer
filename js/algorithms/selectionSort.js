@@ -7,7 +7,6 @@ export class SelectionSort extends UpdateBoardList {
         this.smallestNumberIndex = null;
         this.smallestNumber = null;
         this.list = list;
-
     }
 
     async smallest(currentIndex) {
