@@ -1,4 +1,5 @@
 import { SelectionSort } from "../algorithms/selectionSort.js";
+import { BubbleSort } from "../algorithms/bubbleSort.js";
 
 export class Run {
     constructor() {
@@ -9,6 +10,8 @@ export class Run {
         switch(this.algorithm) {
             case "selection-sort":
                 return new SelectionSort(this.list);
+            case "bubble-sort":
+                return new BubbleSort(this.list);
             default:
                 return null;
         }
@@ -28,7 +31,7 @@ export class Run {
         try {
             return this.algorithmClass.run().then(list => this.done(list));
         } catch(e) {
-            console.warn(`Algorithm '${this.algorithm}' not found`);
+            console.error(e);
             this.done();
             return null;
         }
