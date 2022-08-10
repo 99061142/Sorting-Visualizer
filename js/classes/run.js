@@ -8,7 +8,7 @@ export class Run {
     get algorithmClass() {
         switch(this.algorithm) {
             case "selection-sort":
-                return new SelectionSort();
+                return new SelectionSort(this.list);
             default:
                 return null;
         }
@@ -26,7 +26,7 @@ export class Run {
 
         // If algorithm class is not null, run the algorithm and return sorted list
         try {
-            return this.algorithmClass.run(this.list).then(list => this.done(list));
+            return this.algorithmClass.run().then(list => this.done(list));
         } catch(e) {
             console.warn(`Algorithm '${this.algorithm}' not found`);
             this.done();
