@@ -14,6 +14,7 @@
 ## Algorithms
 ### Working
 * Selection sort (time complexity: O(n2))
+* Bubble sort (time complexity: O(n2))
 
 ### Not working
 * None
