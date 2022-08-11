@@ -1,4 +1,4 @@
-import { UpdateBoardList } from "../classes/UpdateBoardList.js";
+import { UpdateBoardList } from "../classes/updateBoardList.js";
 
 export class SelectionSort extends UpdateBoardList {
     constructor(list) {
