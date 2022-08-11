@@ -19,6 +19,7 @@ export class Test {
         if(this.running) { return; } // Do not test algorithm if it's running
         this.testing = true;
         this.speed.value = this.speed.max
+        this.startingAlgorithm = this.algorithmOptions.value // Save original algorithm
 
         // Test every algorithm that isn't disabled
         for(let algorithm of this.algorithmOptions) {
@@ -31,5 +32,6 @@ export class Test {
 
             this.updateList(); // Create new list
         }
+        this.algorithmOptions.value = this.startingAlgorithm; // Set original algorithm
     }
 }
