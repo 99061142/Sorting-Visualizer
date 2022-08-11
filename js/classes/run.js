@@ -1,8 +1,10 @@
 import { SelectionSort } from "../algorithms/selectionSort.js";
 import { BubbleSort } from "../algorithms/bubbleSort.js";
+import { Test } from "./test.js";
 
-export class Run {
+export class Run extends Test {
     constructor() {
+        super();
         this.running = false;
     }
 
@@ -23,23 +25,23 @@ export class Run {
 
     run() {
         if(this.running) { return; } // Do not run algorithm if it's running
-        this.running = true;
-
-        this.toggleSettings();
+        this.toggleRun();
 
         // If algorithm class is not null, run the algorithm and return sorted list
         try {
-            return this.algorithmClass.run().then(list => this.done(list));
-        } catch(e) {
+            return this.algorithmClass.run().then((list) => {
+                this.toggleRun();
+                return list;
+            });
+        }catch(e) {
             console.error(e);
-            this.done();
+            this.toggleRun();
             return null;
         }
     }
 
-    done(list) {
-        this.running = false;
+    toggleRun() {
+        this.running = !this.running;
         this.toggleSettings();
-        return list
     }
 }
