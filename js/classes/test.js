@@ -13,14 +13,19 @@ export class Test {
         console.log(`Algorithm '${this.algorithm}' is working correctly`);
     }
 
-    async runTests() {
-        if(this.running) { return; } // Do not test algorithm if it's running
-        this.testing = true;
+    listSizeTest() {
+        let listSize = this.list.length;
+        let listSizeRange = Number(this.sizeSlider.value);
+        
+        if(listSize != listSizeRange) { return console.warn(`the list size is not the same as the chosen size with the range`); }
+        console.log(`the list size is the same as the chosen size with the range`);
+    }
 
+    async algorithmTests() {
         // Save list setting before testing
         this.startingSpeed = this.speed.value;
-        this.startingAlgorithm = this.algorithmOptions.value // Save original algorithm
 
+        this.startingAlgorithm = this.algorithmOptions.value // Save original algorithm
         this.speed.value = this.speed.max; // Set speed to max
 
         // Test every algorithm that isn't disabled
@@ -37,5 +42,13 @@ export class Test {
         // Reset list settings to original values
         this.speed.value = this.startingSpeed;
         this.algorithmOptions.value = this.startingAlgorithm;
+    }
+
+    runTests() {
+        if(this.running) { return; } // Do not test algorithm if it's running
+        this.testing = true;
+
+        this.listSizeTest(); // Check if list size is same as chosen size with range
+        this.algorithmTests(); // Check if every algorithm is working correctly
     }
 }
