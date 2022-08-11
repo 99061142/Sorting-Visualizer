@@ -17,8 +17,8 @@ export class Test {
         let listSize = this.list.length;
         let listSizeRange = Number(this.sizeSlider.value);
         
-        if(listSize != listSizeRange) { return console.warn(`the list size is not the same as the chosen size with the range`); }
-        console.log(`the list size is the same as the chosen size with the range`);
+        if(listSize != listSizeRange) { return console.warn(`list size is not the same as the chosen size`); }
+        console.log(`list size is the same as the chosen size`);
     }
 
     async algorithmTests() {
