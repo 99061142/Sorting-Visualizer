@@ -6,14 +6,16 @@ export class ListSettings extends List {
         // Attributes
         this.sizeSlider = document.getElementById('listSize');
         this.newArray = document.getElementById('newArray');
-        this.algorithmOptions = document.getElementById("algorithms");
         this.runButton = document.getElementById('run-button');
+        this.algorithmOptions = document.getElementById("algorithms");
+        this.testButton = document.getElementById('test-algorithms');
 
         // Add event listeners
         this.sizeSliderEvent();
         this.newArrayButtonEvent();
         this.runButtonEvent();
         this.windowSizeEvent();
+        this.testButtonEvent();
         
         // When page is loaded
         this.maxValue = window.innerWidth; // Set max size value to the width of the window
@@ -49,6 +51,14 @@ export class ListSettings extends List {
             this.resizeListValues(); // resize list values on the screen based on the new width of the screen
         });
     }
+
+    testButtonEvent() {
+        // test arrays    
+        this.testButton.onclick = () => {
+            this.runTests();
+        }
+    }
+
 
     toggleSettings() {
         // Disable or enable setting attributes when run button is clicked
