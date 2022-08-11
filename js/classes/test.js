@@ -1,5 +1,3 @@
-import { List } from "./list.js";
-
 export class Test {
     constructor() {
         this.testing = false;
@@ -18,8 +16,12 @@ export class Test {
     async runTests() {
         if(this.running) { return; } // Do not test algorithm if it's running
         this.testing = true;
-        this.speed.value = this.speed.max
+
+        // Save list setting before testing
+        this.startingSpeed = this.speed.value;
         this.startingAlgorithm = this.algorithmOptions.value // Save original algorithm
+
+        this.speed.value = this.speed.max; // Set speed to max
 
         // Test every algorithm that isn't disabled
         for(let algorithm of this.algorithmOptions) {
@@ -32,6 +34,8 @@ export class Test {
 
             this.updateList(); // Create new list
         }
-        this.algorithmOptions.value = this.startingAlgorithm; // Set original algorithm
+        // Reset list settings to original values
+        this.speed.value = this.startingSpeed;
+        this.algorithmOptions.value = this.startingAlgorithm;
     }
 }
