@@ -1,5 +1,6 @@
 import { SelectionSort } from "../algorithms/selectionSort.js";
 import { BubbleSort } from "../algorithms/bubbleSort.js";
+import {InsertionSort } from "../algorithms/insertionSort.js";
 import { Test } from "./test.js";
 
 export class Run extends Test {
@@ -14,6 +15,8 @@ export class Run extends Test {
                 return new SelectionSort(this.list);
             case "bubble-sort":
                 return new BubbleSort(this.list);
+            case "insertion-sort":
+                return new InsertionSort(this.list);
             default:
                 return null;
         }
