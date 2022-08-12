@@ -1,6 +1,8 @@
 import { SelectionSort } from "../algorithms/selectionSort.js";
 import { BubbleSort } from "../algorithms/bubbleSort.js";
 import {InsertionSort } from "../algorithms/insertionSort.js";
+import { MergeSort } from "../algorithms/mergeSort.js";
+
 import { Test } from "./test.js";
 
 export class Run extends Test {
@@ -17,6 +19,8 @@ export class Run extends Test {
                 return new BubbleSort(this.list);
             case "insertion-sort":
                 return new InsertionSort(this.list);
+            case "merge-sort":
+                return new MergeSort(this.list);
             default:
                 return null;
         }
