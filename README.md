@@ -15,9 +15,7 @@
 ### Working
 * Selection sort (time complexity: O(n2))
 * Bubble sort (time complexity: O(n2))
-
-### Not working
-* None
+* Insertion sort (time complexity: O(n2))
 
 ## Note
 * This website is in the starting phase, it does NOT work properly. Some things are not made and sometimes the website is not responding correctly.
