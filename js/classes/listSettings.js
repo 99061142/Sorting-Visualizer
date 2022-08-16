@@ -23,8 +23,8 @@ export class ListSettings extends List {
     }
 
     sizeSliderEvent() {
-        // when user releases the slider
-        this.sizeSlider.addEventListener('mouseup', () => {
+        // create new list when size value changes
+        this.sizeSlider.addEventListener('change', () => {
             this.updateList();
         });
     }
