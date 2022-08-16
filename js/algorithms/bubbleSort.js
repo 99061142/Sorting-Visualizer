@@ -7,16 +7,6 @@ export class BubbleSort extends UpdateBoardList {
         this.listCheck = [...list];
     }
 
-    switch(currentIndex, nextIndex, currentNumber, nextNumber) {
-        // Swap the current number with the smallest number
-        this.list[currentIndex] = nextNumber;
-        this.list[nextIndex] = currentNumber;
-
-        // Update the height of switched elements
-        this.updateHeight(currentIndex, nextNumber);
-        this.updateHeight(nextIndex, currentNumber);
-    }
-
     async smallest() {
         // For every number in the list
         for(let i = 0; i < this.listCheck.length; i++) {
@@ -27,7 +17,7 @@ export class BubbleSort extends UpdateBoardList {
 
             // If the current number is smaller than the next number
             if(currentNumber > nextNumber) {
-                this.switch(i, nextIndex, currentNumber, nextNumber); // Move current child to next child position
+                this.switch(i, currentNumber, nextIndex, nextNumber); // Move current child to next child position
             }
         }
         this.listCheck.pop();
