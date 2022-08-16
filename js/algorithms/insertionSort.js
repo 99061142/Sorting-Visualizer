@@ -6,14 +6,6 @@ export class InsertionSort extends UpdateBoardList {
         this.list = list
     }
 
-    switch(currentIndex, currentNumber, previousIndex, previousNumber) {
-        // Swap the current number with the number left of it
-        this.list[currentIndex] = previousNumber;
-        this.list[previousIndex] = currentNumber;
-        this.updateHeight(currentIndex, previousNumber);
-        this.updateHeight(previousIndex, currentNumber);
-    }
-
     async setLeftElementsFound(currentIndex) {
         // Set all elements left of the currentIndex index to found
         for(let i = currentIndex; i >= 0; i--) {
