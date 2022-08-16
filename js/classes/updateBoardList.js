@@ -12,6 +12,14 @@ export class UpdateBoardList {
         this.smallestIndex = null;
     }
 
+    switch(currentIndex, currentNumber, previousIndex, previousNumber) {
+        // Swap the current number with the number left of it
+        this.list[currentIndex] = previousNumber;
+        this.list[previousIndex] = currentNumber;
+        this.updateHeight(currentIndex, previousNumber);
+        this.updateHeight(previousIndex, currentNumber);
+    }
+
     clearBoard() {
         for(let i = 0; i < this.children.length; i++) {
             this.standard(i);
@@ -79,7 +87,8 @@ export class UpdateBoardList {
         this.setChildBackgroundColor(i, color);
     }
 
-    updateHeight(i, value) {
-        this.children.item(i).style.height = `${value}px`;
+    updateHeight(i, elementHeight) {
+        this.children.item(i).style.height = `${elementHeight}px`;
+        return;
     }
 }
