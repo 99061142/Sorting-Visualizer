@@ -15,12 +15,11 @@ export class InsertionSort extends UpdateBoardList {
 
     async run() {
         this.clearBoard();
-        await this.found(0); // Always set the first element to found
+        this.found(0); // Always set the first element to found
 
         // For every number in the list
         for(let i = 1; i < this.listSize; i++) {
             await this.smallest(i); // Move highest number to the end of the list
-            this.clearBoardExceptFound(); // Clear board except found childs
         }
         await this.fullBoardFound(); // Set all elements to found
         return this.dict;
