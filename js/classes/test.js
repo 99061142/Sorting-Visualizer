@@ -7,10 +7,11 @@ export class Test {
     }
 
     compare(answer) {
+        if(!answer.length) { return console.warn(`'${this.algorithm}' EMPTY`) }
+
         let correctList = [...this.list].sort((a, b) => a - b);
         let correct = answer.every((value, index) => value == correctList[index]); // Check if sorted correctly
         
-        if(!answer.length) { return console.warn(`'${this.algorithm}' EMPTY`) }
         if(!correct) { return console.warn(`'${this.algorithm}' NOT WORKING`); }
         console.log(`'${this.algorithm}' WORKING`);
     }
@@ -42,6 +43,7 @@ export class Test {
             let answer = await this.run();
             this.compare(answer);
         }
+
         // Reset list settings to original values
         this.speed.value = this.startingSpeed;
         this.algorithmOptions.value = this.startingAlgorithm;
@@ -53,7 +55,7 @@ export class Test {
         if(this.running) { return; } // Do not test algorithm if it's running
         this.testing = true;
 
-        // test 10 times 
+        // test (x) times 
         for(let i = 0; i < this._testAmount; i++) {
             this.listSizeTest(); // Check if list size is same as chosen size with range
             await this.algorithmTests(); // Check if every algorithm is working correctly
