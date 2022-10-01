@@ -9,6 +9,7 @@ export class InsertionSort extends UpdateBoardList {
         while(checked > 0 && this.previousSmallest(checked)) {
             this.current(checked-1);
             await this.switch(checked, checked-1);
+            await this.found(checked-1);
             checked--;
         }
     }
@@ -22,6 +23,6 @@ export class InsertionSort extends UpdateBoardList {
             await this.smallest(i); // Move highest number to the end of the list
         }
         await this.fullBoardFound(); // Set all elements to found
-        return this.dict;
+        return this.sortedList;
     }
 }
