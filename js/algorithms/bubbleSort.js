@@ -17,14 +17,12 @@ export class BubbleSort extends UpdateBoardList {
             await this.next(i); 
 
             if(this.nextSmallest(i)) { 
-                // If right element is smaller than current element, switch them and set it as found
+                // If right element is smaller than current element, switch them and set it as current
                 await this.switch(i, i+1); 
             } 
-            else {
-                // If right element is larger than current element, set it as found
-                await this.found(i+1);
-            }
+            this.current(i+1);
         }
+        this.found(end); // When element is correctly sorted, set it to found
     }
 
     async run() {
@@ -35,6 +33,6 @@ export class BubbleSort extends UpdateBoardList {
             this.clearBoardExceptFound(); // Clear board except elements that are already sorted
         }
         await this.fullBoardFound(); // Set all elements to found
-        return this.dict;
+        return this.sortedList;
     }
 }
