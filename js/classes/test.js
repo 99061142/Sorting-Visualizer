@@ -35,7 +35,11 @@ export class Test {
 
         // Test every algorithm that isn't disabled
         for(let algorithm of this.algorithmOptions) {
-            if(algorithm.disabled) { continue; } // Skip disabled algorithms
+            if(algorithm.disabled) { 
+                console.warn(`'${algorithm.value}' DISABLED`);
+                continue; 
+            }
+
             this.algorithmOptions.value = algorithm.value; // Set algorithm
             this.updateList(); // Create new list
 
