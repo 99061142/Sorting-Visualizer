@@ -1,37 +1,40 @@
 import { UpdateBoardList } from "../classes/updateBoardList.js"
 
 export class BubbleSort extends UpdateBoardList {
-    constructor(list) {
+    constructor() {
         super();
-        this.list = list;
-        this.listCheck = [...list];
     }
 
-    async smallest() {
-        // For every number in the list
-        for(let i = 0; i < this.listCheck.length; i++) {
-            await this.next(i);
-            let nextIndex = i + 1;
-            let currentNumber = this.list[i];
-            let nextNumber = this.list[i + 1];
+    async smallest(checked) {
+        /*
+        Length of numbers minus the checked numbers
+        It gets decreased by 1 so that it doesn't check the last number, because it's already the highest number
+        */
+        let end = this.listSize - checked - 1;
 
-            // If the current number is smaller than the next number
-            if(currentNumber > nextNumber) {
-                this.switch(i, currentNumber, nextIndex, nextNumber); // Move current child to next child position
+        // Make list lowest to highest
+        for(let i = 0; i < end; i++) {
+            await this.next(i); 
+
+            if(this.nextSmallest(i)) { 
+                // If right element is smaller than current element, switch them and set it as found
+                await this.switch(i, i+1); 
+            } 
+            else {
+                // If right element is larger than current element, set it as found
+                await this.found(i+1);
             }
         }
-        this.listCheck.pop();
     }
 
     async run() {
-        this.clearBoard();
+        this.clearBoard(); // Clear the whole board before sorting
 
-        // For every number in the list
-        for(let i = 0; i < this.list.length; i++) {
-            await this.smallest(); // Move highest number to the end of the list
-            await this.found(this.listCheck.length); // Set last checked child to found
-            this.clearBoardExceptFound(); // Clear board except found childs
+        for(let i = 0; i < this.listSize; i++) {
+            await this.smallest(i); // Move highest number to the end of the list
+            this.clearBoardExceptFound(); // Clear board except elements that are already sorted
         }
-        return this.list;
+        await this.fullBoardFound(); // Set all elements to found
+        return this.dict;
     }
 }
