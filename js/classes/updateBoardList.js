@@ -83,8 +83,6 @@ export class UpdateBoardList {
 
         this.swapElementHeights(currentIndex, otherIndex);
         this.swapDictHeights(currentIndex, otherIndex);
-
-        await this.found(otherIndex); // Set the element color to found
     }
 
     async fullBoardFound() {
