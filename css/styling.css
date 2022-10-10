@@ -15,19 +15,14 @@
     color: green;
 }
 
-#run-button[disabled] {
-    color: red;
-}
-
-#algorithms[disabled] {
-    color: red;
-}
-
-#newArray[disabled] {
-    color: red;
-}
-
+#run-button[disabled],
+#algorithms[disabled],
+#newArray[disabled],
 #test-algorithms[disabled] {
     color: red;
+}
+
+#test-algorithms[disabled],
+#algorithms > option[disabled] {
     display: none !important;
 }
