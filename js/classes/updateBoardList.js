@@ -14,7 +14,7 @@ export class UpdateBoardList {
         this.speedRange = document.getElementById('listSortingSpeed')
     }
 
-    get sortedList() {
+    get numbers() {
         return this.dict.map((element) => {
             return element.height;
         });
