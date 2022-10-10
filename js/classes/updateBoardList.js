@@ -20,6 +20,12 @@ export class UpdateBoardList {
         });
     }
 
+    get elements() {
+        return this.dict.map((element) => {
+            return element.element;
+        });
+    }
+
     get listSize() {
         let length = this.listDiv.children.length;
         return length;
