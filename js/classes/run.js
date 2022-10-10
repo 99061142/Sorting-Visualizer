@@ -3,25 +3,23 @@ import { BubbleSort } from "../algorithms/bubbleSort.js";
 import {InsertionSort } from "../algorithms/insertionSort.js";
 import { MergeSort } from "../algorithms/mergeSort.js";
 
-import { Test } from "./test.js";
-
-export class Run extends Test {
+export class Run {
     constructor() {
-        super();
         this.running = false;
     }
 
     get algorithmClass() {
         switch(this.algorithm) {
             case "selection-sort":
-                return new SelectionSort(this.list);
+                return new SelectionSort();
             case "bubble-sort":
-                return new BubbleSort(this.list);
+                return new BubbleSort();
             case "insertion-sort":
-                return new InsertionSort(this.list);
+                return new InsertionSort();
             case "merge-sort":
-                return new MergeSort(this.list);
+                return new MergeSort();
             default:
+                console.warn(`'${this.algorithm}' NOT FOUND`);
                 return null;
         }
     }
@@ -43,7 +41,6 @@ export class Run extends Test {
         }catch(e) {
             console.error(e);
             this.toggleRun();
-            return null;
         }
     }
 
