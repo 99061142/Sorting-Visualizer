@@ -10,6 +10,7 @@ export class UpdateBoardList {
         this.listDiv = document.getElementById('list');
         this.listDivChildren = this.listDiv.children;
         this.smallestIndex = null;
+        this.currentIndex = null;
         this.dict = this.startingDict();
         this.speedRange = document.getElementById('listSortingSpeed')
     }
@@ -18,6 +19,18 @@ export class UpdateBoardList {
         return this.dict.map((element) => {
             return element.height;
         });
+    }
+
+    setCurrentAsNext() {
+        this.next(this.currentIndex);
+    }
+
+    number(i) {
+        return this.dict[i].height;
+    }
+
+    element(i) {
+        return this.dict[i].element;
     }
 
     get elements() {
@@ -170,6 +183,8 @@ export class UpdateBoardList {
     }
 
     current(i) {
+        this.currentIndex = i;
+
         // Set element to smallest
         let color = this.colors['smallest'];
         this.setChildBackgroundColor(i, color);
