@@ -1,55 +1,42 @@
 import { UpdateBoardList } from "../classes/updateBoardList.js";
 
 export class SelectionSort extends UpdateBoardList {
-    constructor(list) {
+    constructor() {
         super();
-        this.currentNumber = null;
-        this.smallestNumberIndex = null;
         this.smallestNumber = null;
-        this.list = list;
     }
 
-    async smallest(currentIndex) {
-        // For every number in the list after the current index
-        for(let j = currentIndex + 1; j < this.list.length; j++) {
-            await this.next(j);
-            let nextNumber = this.list[j];
+    async smallest(start) {
+        for(let i = start; i < this.listSize; i++) {
+            await this.next(i);
 
-            // If the next number is smaller than the current number
-            if(nextNumber < this.smallestNumber) {
-                // Save the position of the smallest number and the number itself
-                this.smallestNumber = nextNumber;
-                this.smallestNumberIndex = j;
-                this.smallest(j); // Set child to smallest color
+            if(this.smallestNumber == null || this.number(i) < this.smallestNumber) {
+                // If there is an element "smallest" on the board, set it as "next"
+                if(this.smallestNumber != null) { 
+                    this.setCurrentAsNext();
+                }
+                // Set the current element as "smallest"
+                this.current(i);
+
+                // Set the current number as the smallest number
+                this.smallestNumber = this.number(i);
             }
         }
-    }
+        // Switch "smallest" element with the current element
+        await this.switch(start, this.currentIndex);
+        
+        // Set smallest number to null
+        this.smallestNumber = null;
 
-    switch(currentIndex) {
-        // Swap the current number with the smallest number
-        this.list[currentIndex] = this.smallestNumber;
-        this.list[this.smallestNumberIndex] = this.currentNumber;
-
-        // Update the height of switched elements
-        this.updateHeight(currentIndex, this.smallestNumber);
-        this.updateHeight(this.smallestNumberIndex, this.currentNumber);
+        // Set the current element as "found"
+        this.found(start);
     }
 
     async run() {
-        this.clearBoard();
-
-        // For every number in the list
-        for(let i = 0; i < this.list.length; i++) {
-            this.currentNumber = this.list[i];
-            this.smallestNumberIndex = i;
-            this.smallestNumber = this.currentNumber;
-
-            await this.next(i); // Set current child to next color
-            await this.smallest(i); // Check every number and set smallest child
-            this.clearBoardExceptFound();
-            if(i != this.smallestNumberIndex) { this.switch(i); } // Switch current with lowest number
-            await this.found(i); // Set current child to found
+        for(let i = 0; i < this.listSize; i++) {
+            await this.smallest(i); // Switch current element with smallest element
+            this.clearBoardExceptFound(); // Clear board except elements that are already sorted
         }
-        return this.list
+        return this.numbers;
     }
 }
