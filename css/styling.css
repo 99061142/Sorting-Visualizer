@@ -11,6 +11,18 @@
     vertical-align: top;
 }
 
+#list > div.sorted {
+    background-color: green;
+}
+
+#list > div.selected {
+    background-color: red;
+}
+
+#list > div.next {
+    background-color: yellow;
+}
+
 #run-button {
     color: green;
 }
