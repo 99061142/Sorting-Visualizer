@@ -5,34 +5,32 @@ export class BubbleSort extends UpdateBoardList {
         super();
     }
 
-    async smallest(current) {
+    async loop(current) {
         /*
         Length of numbers minus the checked numbers
         It gets decreased by 1 so that it doesn't check the last number, because it's already the highest number
         */
-        let end = this.listSize - current - 1;
+        let end = this.elementsAmount - current - 1;
 
         // Make list lowest to highest
         for(let i = 0; i < end; i++) {
             await this.next(i); 
 
+            // Switch current and right element height if right number is larger
             if(this.nextSmallest(i)) { 
-                // If right element is smaller than current element, switch them and set it as current
-                await this.switch(i, i+1); 
+                await this.switchHeight(i, i+1); 
             } 
-            this.current(i+1);
+            this.selected(i+1);
         }
-        this.found(end); // When element is correctly sorted, set it to found
+        this.sorted(end);
     }
 
     async run() {
         this.clearBoard(); // Clear the whole board before sorting
 
-        for(let i = 0; i < this.listSize; i++) {
-            await this.smallest(i); // Move highest number to the end of the list
-            this.clearBoardExceptFound(); // Clear board except elements that are already sorted
+        for(let i = 0; i < this.elementsAmount; i++) {
+            await this.loop(i); // Move highest number to the end of the list
+            this.clearBoardExceptSorted(); // Clear board except elements that are already sorted
         }
-        await this.fullBoardFound(); // Set all elements to found
-        return this.numbers;
     }
 }
