@@ -1,204 +1,173 @@
 export class UpdateBoardList {
     constructor() {
-        this.colors = {
-            standard: 'blue',
-            next: 'orange',
-            found: 'green',
-            smallest: 'red'
-        };
-
-        this.listDiv = document.getElementById('list');
-        this.listDivChildren = this.listDiv.children;
-        this.smallestIndex = null;
-        this.currentIndex = null;
+        this.elements = document.getElementById('list').children;
+        this.elementsAmount = this.elements.length;
         this.dict = this.startingDict();
-        this.speedRange = document.getElementById('listSortingSpeed')
     }
 
-    get numbers() {
-        return this.dict.map((element) => {
-            return element.height;
-        });
-    }
-
-    setCurrentAsNext() {
-        this.next(this.currentIndex);
-    }
 
     number(i) {
-        return this.dict[i].height;
+        return this.elements[i].offsetHeight;
     }
 
     element(i) {
-        return this.dict[i].element;
+        return this.elements[i];
     }
 
-    get elements() {
-        return this.dict.map((element) => {
-            return element.element;
-        });
-    }
+    nextSmallest(i) {
+        if(i+1 == this.elementsAmount) { return false; }
 
-    get listSize() {
-        let length = this.listDiv.children.length;
-        return length;
-    }
-
-    startingDict() {
-        // Create a dictionary with the elements and their heights 
-        let dict = Array.prototype.slice.call(this.listDivChildren).map((element) => {
-            return {
-                element: element, 
-                height: element.offsetHeight
-            }
-        });
-        return dict;
-    }
-
-    nextSmallest(currentIndex) {
-        // If the current index is the last element, return false
-        if(currentIndex == this.listDivChildren.length - 1) { return false; }
-
-        // Compare the current element height with the next element height
-        let currentHeight = this.dict[currentIndex].height;
-        let nextHeight = this.dict[currentIndex+1].height;
+        // Return if right number is larger than current number
+        let currentHeight = this.elements[i].offsetHeight;
+        let nextHeight = this.elements[i+1].offsetHeight;
         return currentHeight > nextHeight;
     }
 
-    previousSmallest(currentIndex) {
-        // If the current index is the first element, return false
-        if(currentIndex == 0) { return false; }
+    previousSmaller(i) {
+        if(i == 0) { return false; }
 
-        // Compare the current element height with the previous element height
-        let currentHeight = this.dict[currentIndex].height;
-        let previousHeight = this.dict[currentIndex-1].height;
+        // Return if left number is larger than current number
+        let currentHeight = this.elements[i].offsetHeight;
+        let previousHeight = this.elements[i-1].offsetHeight;
         return currentHeight < previousHeight;
     }
 
-    currentSmallest(currentIndex) { 
-        // If the element with the index has the smallest height of all the elements that were compared
-        return this.smallestIndex == currentIndex;
+    elementSorted(i) {
+        return this.elements[i].className.includes("sorted");
     }
 
-    elementHeight(elementIndex) {
-        return this.dict[elementIndex].height;
+    elementNext(i) {
+        return this.elements[i].className.includes("next");
     }
 
-    swapElementHeights(currentIndex, otherIndex) {
-        let currentHeight = this.elementHeight(currentIndex);
-        let otherHeight = this.elementHeight(otherIndex);
-
-        // Swap element heights
-        this.dict[otherIndex].element.style.height = currentHeight + 'px';
-        this.dict[currentIndex].element.style.height = otherHeight + 'px';
+    elementSelected(i) {
+        return this.elements[i].className.includes("selected");
     }
 
-    swapDictHeights(currentIndex, otherIndex) {
-        let currentHeight = this.elementHeight(currentIndex);
-        let otherHeight = this.elementHeight(otherIndex);
+    elementStandard(i) {
+        let elementSorted = this.elementSorted(i);
+        let elementNext = this.elementNext(i);
+        let elementSelected = this.elementSelected(i);
 
-        // Swap dict height
-        this.dict[currentIndex].height = otherHeight
-        this.dict[otherIndex].height = currentHeight
+        return !elementSorted && !elementNext && !elementSelected;
     }
 
-    async switch(currentIndex, otherIndex) {
-        // If the other index is out of bounds, return
-        if(otherIndex < 0 || otherIndex >= this.listDivChildren.length) { return; }
-
-        this.swapElementHeights(currentIndex, otherIndex);
-        this.swapDictHeights(currentIndex, otherIndex);
-    }
-
-    async fullBoardFound() {
-        // For every element on the board
-        for(let i = 0; i < this.listDivChildren.length; i++) {
-            // If element was not already found, set it to found
-            if(!this.elementFound(i)) { 
-                await this.found(i);
+    clearBoard() {
+        // Set every element on the board to standard
+        for(let i = 0; i < this.elementsAmount; i++) {
+            if(!this.elementStandard(i)) {
+                this.standard(i);
             }
         }
     }
 
-    clearBoardExceptFound() {
+    async fullBoardSorted() {
+        // Set every element on the board to found if they are not already
+        for(let i = 0; i < this.elementsAmount; i++) {
+            if(!this.elementSorted(i)) { 
+                await this.sorted(i);
+            }
+        }
+    }
+
+    async sorted(i) {
+        await this.sleep();
+        this.setElementClassname(i, "sorted");
+    }
+
+    async next(i) {
+        await this.sleep();
+        this.setElementClassname(i, "next");
+    }
+    
+    standard(i) {
+        this.setElementClassname(i, "");
+    }
+
+    selected(i) {
+        this.setElementClassname(i, "selected");
+    }
+
+    setElementClassname(i, classname) {
+        this.elements[i].className = classname;
+    }
+
+    sleep() {
+        let speedRange = document.getElementById('listSortingSpeed')
+        let max_speed = speedRange.max
+        let current = speedRange.value
+        let ms = max_speed - current;
+        
+        if(ms) { 
+            return new Promise(resolve => setTimeout(resolve, ms)); 
+        }
+    }
+
+    clearBoardExceptSorted() {
         // For every element on the board
-        for(let i = 0; i < this.listDivChildren.length; i++) {
+        for(let i = 0; i < this.elementsAmount; i++) {
             // If element was not found, set it to standard
-            if(!this.elementFound(i)) { 
+            if(!this.elementSorted(i)) { 
                 this.standard(i); 
             }
         }
     }
 
-    clearBoard() {
-        // Set every element on the board to standard
-        for(let i = 0; i < this.listDivChildren.length; i++) {
-            this.standard(i);
+    elementPixelHeight(elementIndex) {
+        return this.elements[elementIndex].style.height;
+    }
+
+    async switchHeight(currentIndex, otherIndex) {
+        let currentHeight = this.elementPixelHeight(currentIndex);
+        let otherHeight = this.elementPixelHeight(otherIndex);
+
+        // Swap element heights
+        this.elements[otherIndex].style.height = currentHeight;
+        this.elements[currentIndex].style.height = otherHeight;
+    }
+
+    startingDict() {
+        let elementsList = Array.prototype.slice.call(this.elements);
+
+        // Create a dictionary with the elements and their heights 
+        let dict = elementsList.map((element, index) => {
+            return {
+                index: index,
+                number: element.offsetHeight
+            };
+        });
+        return dict;
+    }
+
+    async sortElementHeights(startingDict, sortedDict) {
+        let highestNumber = null;
+        let highestIndex = null;
+
+        for(let i = 0; i < sortedDict.length; i++) {
+            let number = sortedDict[i].height;
+            let index = startingDict[i].index
+
+            // If the highest number is not set or the current number is higher than the highest number
+            if(highestNumber == null || number > highestNumber) {
+                // If the highest number is set, set the element with the highest number to standard
+                if(highestIndex != null) {
+                    await this.next(highestIndex);
+                }
+
+                // Set the currently highest number and element to sorted and save the index and number
+                await this.sorted(index);
+                highestNumber = number;
+                highestIndex = index;
+            } 
+            else {
+                await this.next(index);
+            }
+
+            // Set element height to the sorted height
+            let element = this.elements[index];
+            let pixelHeight = sortedDict[i].number + "px";
+            element.style.height = pixelHeight;
         }
-    }
-
-    elementFound(i) {
-        // If the element was found
-        return this.dict[i].element.style.backgroundColor == this.colors['found'];
-    }
-
-    elementNext(i) {
-        // If the element was next
-        return this.dict[i].element.style.backgroundColor == this.colors['next'];
-    }
-
-    elementSmallest(i) {
-        // If the element was smallest
-        return this.dict[i].element.style.backgroundColor == this.colors['smallest'];
-    }
-
-    elementStandard(i) {
-        // If the element was standard
-        return this.dict[i].element.style.backgroundColor == this.colors['standard'];
-    }
-
-    async found(i) {
-        await this.sleep();
-
-        // Set element to found
-        let color = this.colors['found'];
-        this.setChildBackgroundColor(i, color);
-
-        // Set smallest index as current index
-        this.smallestIndex = i;
-    }
-
-    async next(i) {
-        await this.sleep();
-
-        // Set element to next
-        let color = this.colors['next'];
-        this.setChildBackgroundColor(i, color);
-    }
-    
-    standard(i) {
-        // Set element to standard
-        let color = this.colors['standard'];
-        this.setChildBackgroundColor(i, color);
-    }
-
-    current(i) {
-        this.currentIndex = i;
-
-        // Set element to smallest
-        let color = this.colors['smallest'];
-        this.setChildBackgroundColor(i, color);
-    }
-
-
-    setChildBackgroundColor(i, color) {
-        this.dict[i].element.style.backgroundColor = color;
-    }
-
-    sleep() {
-        let max_speed = this.speedRange.max
-        let current = this.speedRange.value
-        let ms = max_speed - current;
-        if(ms) { return new Promise(resolve => setTimeout(resolve, ms)); }
+        this.standard(highestIndex);
     }
 }
