@@ -3,40 +3,42 @@ import { UpdateBoardList } from "../classes/updateBoardList.js";
 export class SelectionSort extends UpdateBoardList {
     constructor() {
         super();
-        this.smallestNumber = null;
     }
 
-    async smallest(start) {
-        for(let i = start; i < this.listSize; i++) {
+    async loop(start) {
+        let smallestNumber = null;
+        let smallestIndex = null;
+        let lastSelectedIndex = null;
+
+        for(let i = start; i < this.elementsAmount; i++) {
             await this.next(i);
 
-            if(this.smallestNumber == null || this.number(i) < this.smallestNumber) {
-                // If there is an element "smallest" on the board, set it as "next"
-                if(this.smallestNumber != null) { 
-                    this.setCurrentAsNext();
+            if(smallestNumber == null || this.number(i) < smallestNumber) {
+                // Remove the last selected element from the board
+                if(lastSelectedIndex != null) {
+                    this.standard(lastSelectedIndex);
                 }
-                // Set the current element as "smallest"
-                this.current(i);
+                // Set the current element as the selected element
+                this.selected(i);
+                lastSelectedIndex = i;
 
-                // Set the current number as the smallest number
-                this.smallestNumber = this.number(i);
+                // Save number and element index
+                smallestNumber = this.number(i);
+                smallestIndex = i;
             }
         }
-        // Switch "smallest" element with the current element
-        await this.switch(start, this.currentIndex);
+        // Switch number of current element with smallest element
+        await this.switchHeight(start, smallestIndex);
         
-        // Set smallest number to null
-        this.smallestNumber = null;
-
-        // Set the current element as "found"
-        this.found(start);
+        this.sorted(start);
     }
 
     async run() {
-        for(let i = 0; i < this.listSize; i++) {
-            await this.smallest(i); // Switch current element with smallest element
-            this.clearBoardExceptFound(); // Clear board except elements that are already sorted
+        this.clearBoard(); // Clear the whole board before sorting
+
+        for(let i = 0; i < this.elementsAmount; i++) {
+            await this.loop(i); // Switch current element with smallest element
+            this.clearBoardExceptSorted(); // Clear board except elements that are already sorted
         }
-        return this.numbers;
     }
 }
