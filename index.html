@@ -29,11 +29,11 @@
                     <div class="row d-flex justify-content-center">
                         <div class="col-sm-12 col-md-6 col-lg-3">
                             <label class="d-block" for="listSortingSpeed">Sorting speed</label>
-                            <input type="range" min="1" max="100" value="50" id="listSortingSpeed" />
+                            <input type="range" min="0" max="100" value="50" id="listSortingSpeed" />
                         </div>
                         <div class="col-sm-12 col-md-6 col-lg-3">
                             <label class="d-block" for="listSize">List size</label>
-                            <input type="range" min="25" id="listSize" />
+                            <input type="range" min="2" id="listSize" />
                         </div>    
                     </div>
                 </div>              
@@ -41,10 +41,10 @@
                 <div class="col-3">
                     <label for="algorithms">Algorithm:</label>
                     <select id="algorithms" style="cursor: pointer;">
+                        <option value="merge-sort">Merge sort</option>
                         <option value="selection-sort">Selection sort</option>
                         <option value="bubble-sort">Bubble sort</option>
                         <option value="insertion-sort">Insertion sort</option>
-                        <option value="merge-sort" disabled>Merge sort</option>
                     </select>
                     <button class="d-block text-left" id="test-algorithms">Test algorithms</button>
                 </div>
