@@ -1,65 +1,74 @@
 import { UpdateBoardList } from "../classes/updateBoardList.js"
 
 export class MergeSort extends UpdateBoardList {
-    constructor(list) {
+    constructor() {
         super();
-        this.list = list;
     }
 
-    left(list) {
-        return list.slice(0, this.mid(list));
+    left(dict) {
+        return dict.slice(0, this.mid(dict));
     }
 
-    right(list) {
-        return list.slice(this.mid(list), list.length);
+    right(dict) {
+        return dict.slice(this.mid(dict), dict.length);
     }
 
-    mid(list) {
-        return Math.floor(list.length / 2);
+    mid(dict) {
+        return Math.floor(dict.length / 2);
     }
 
-    async merge(list, leftValues, rightValues) {
-        let leftIndex = 0;
-        let rightIndex = 0;
-        let outputIndex = 0;
+    async merge(dict, left, right) {
+        let currentI = 0;
+        let leftI = 0;
+        let rightI = 0;
+        let startingDict = [...dict];
 
-        // While there are values inside the left and right list that needs to be compared
-        while (leftIndex < leftValues.length && rightIndex < rightValues.length) {
-            // Set list value to the lowest value inside the left or right list
-            list[outputIndex++] = (leftValues[leftIndex] < rightValues[rightIndex]) ? leftValues[leftIndex++] : rightValues[rightIndex++];
+        while (leftI < left.length && rightI < right.length) {
+            if (left[leftI].number < right[rightI].number) {
+                dict[currentI] = left[leftI];
+                leftI++;
+            }
+            else {
+                dict[currentI] = right[rightI];
+                rightI++;
+            }
+            currentI++;
         }
 
-        // Add the remaining values from the left list to the output list
-        while (leftIndex < leftValues.length) {
-            list[outputIndex++] = leftValues[leftIndex++];
+        while (leftI < left.length) {
+            dict[currentI] = left[leftI];
+            leftI++;
+            currentI++;
         }
 
-        // Add the remaining values from the right list to the output list
-        while (rightIndex < rightValues.length) {
-            list[outputIndex++] = rightValues[rightIndex++];
+        while (rightI < right.length) {
+            dict[currentI] = right[rightI];
+            rightI++;
+            currentI++;
         }
+
+        await this.sortElementHeights(startingDict, dict);
+        this.clearBoardExceptSorted();
     }
 
-    async mergeSort(list) {
-        if (list.length < 2) { return; }
+    async mergeSort(dict=this.dict) {
+        if (dict.length < 2) { return; }
 
         // Sides
-        let leftValues = this.left(list);
-        let rightValues = this.right(list);
+        let left = this.left(dict);
+        let rigt = this.right(dict);
 
-        // Recursion until list size is 1
-        this.mergeSort(leftValues);
-        this.mergeSort(rightValues);
-
-        // Merge the two sides from lowest to highest value 
-        this.merge(list, leftValues, rightValues);
-
+        // Recursion until list size is < 2
+        await this.mergeSort(left);
+        await this.mergeSort(rigt);
         
+        // Merge the two sides from lowest to highest number
+        await this.merge(dict, left, rigt);
     }
 
     async run() {
         this.clearBoard();
-        this.mergeSort(this.list);
-        return this.list;
+        await this.mergeSort();
+        await this.fullBoardSorted();
     }
 }
