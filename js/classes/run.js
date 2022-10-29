@@ -20,7 +20,6 @@ export class Run {
                 return new MergeSort();
             default:
                 console.warn(`'${this.algorithm}' NOT FOUND`);
-                return null;
         }
     }
 
@@ -34,7 +33,7 @@ export class Run {
 
         // If algorithm class is not null, run the algorithm and return sorted list
         try {
-            return this.algorithmClass.run().then((list) => {
+            this.algorithmClass.run().then(() => {
                 this.toggleRun();
                 return list;
             });
