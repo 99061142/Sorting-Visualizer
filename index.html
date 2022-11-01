@@ -12,31 +12,31 @@
         <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css" integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS" crossorigin="anonymous" />
 
         <!-- Custom JS -->
-        <script type="module" src="js/classes/listSettings.js" defer></script>
+        <script type="module" src="js/classes/settings.js" defer></script>
 
         <!-- Custom CSS -->
         <link rel="stylesheet" href="css/styling.css" />
     </head>
     <body>
-        <div class="container">
+        <div class="container" id="settings-container">
             <div class="row">
                 <div class="col-3">
                     <button class="button-as-text text-left mb-2" id="newArray">Generate new array</button>
-                    <button class="d-block button-as-text text-left" id="run-button">Sort array</button>
+                    <button class="d-block button-as-text text-left" id="runButton">Sort array</button>
                 </div>
 
                 <div class="col-6 border-left border-right" style="border-color: black !important; border-width: thick !important;">
                     <div class="row d-flex justify-content-center">
                         <div class="col-sm-12 col-md-6 col-lg-3">
-                            <label class="d-block" for="listSortingSpeed">Sorting speed</label>
-                            <input type="range" min="0" max="100" value="50" id="listSortingSpeed" />
+                            <label class="d-block" for="speedSlider">Sorting speed</label>
+                            <input type="range" min="0" max="100" value="50" id="speedSlider" />
                         </div>
                         <div class="col-sm-12 col-md-6 col-lg-3">
-                            <label class="d-block" for="listSize">List size</label>
-                            <input type="range" min="2" id="listSize" />
+                            <label class="d-block" for="sizeSlider">List size</label>
+                            <input type="range" min="2" id="sizeSlider" />
                         </div>    
                     </div>
-                </div>              
+                </div>
 
                 <div class="col-3">
                     <label for="algorithms">Algorithm:</label>
@@ -46,13 +46,13 @@
                         <option value="bubble-sort">Bubble sort</option>
                         <option value="insertion-sort">Insertion sort</option>
                     </select>
-                    <button class="d-block text-left" id="test-algorithms">Test algorithms</button>
+                    <button class="d-block text-left" id="testButton">Test algorithms</button>
                 </div>
             </div>
         </div>
 
         <main class="border-top" style="border-color: black !important; border-width: thick !important;">
-            <div id="list" class="d-flex justify-content-center"></div>
+            <div id="board" class="d-flex justify-content-center"></div>
         </main>
     </body>
 </html>
