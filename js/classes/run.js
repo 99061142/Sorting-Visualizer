@@ -1,50 +1,51 @@
 import { SelectionSort } from "../algorithms/selectionSort.js";
 import { BubbleSort } from "../algorithms/bubbleSort.js";
-import {InsertionSort } from "../algorithms/insertionSort.js";
+import { InsertionSort } from "../algorithms/insertionSort.js";
 import { MergeSort } from "../algorithms/mergeSort.js";
 
 export class Run {
-    constructor() {
-        this.running = false;
+    constructor(switchSettingsState) {
+        this._runnning = false;
+        this._switchSettingsState = switchSettingsState;
+        this._algorithmButton = document.getElementById("algorithms");
+    }
+
+    get chosenAlgorithm() {
+        let algorithm = this._algorithmButton.value;
+        return algorithm;
+    }
+
+    set chosenAlgorithm(algorithm) {
+        this._algorithmButton.value = algorithm;
     }
 
     get algorithmClass() {
-        switch(this.algorithm) {
+        // call algorithm class based on the current algorithm
+        switch (this.chosenAlgorithm) {
             case "selection-sort":
-                return new SelectionSort();
+                return SelectionSort;
             case "bubble-sort":
-                return new BubbleSort();
+                return BubbleSort;
             case "insertion-sort":
-                return new InsertionSort();
+                return InsertionSort;
             case "merge-sort":
-                return new MergeSort();
+                return MergeSort;
             default:
-                console.warn(`'${this.algorithm}' NOT FOUND`);
+                this._runnning = false;
+                this._switchSettingsState(this._runnning);
+                throw new Error(`Algorithm '${this.chosenAlgorithm}' not found`);
         }
     }
 
-    get algorithm() {
-        return this.algorithmOptions.value;
-    }
+    async run() {
+        if(this._runnning) { return; }
+        this._runnning = true;
+        this._switchSettingsState(this._runnning);
 
-    run() {
-        if(this.running) { return; } // Do not run algorithm if it's running
-        this.toggleRun();
-
-        // If algorithm class is not null, run the algorithm and return sorted list
-        try {
-            this.algorithmClass.run().then(() => {
-                this.toggleRun();
-                return list;
-            });
-        }catch(e) {
-            console.error(e);
-            this.toggleRun();
-        }
-    }
-
-    toggleRun() {
-        this.running = !this.running;
-        this.toggleSettings();
+        // Run the algorithm
+        await new this.algorithmClass().run().then(() => {
+            this._runnning = false;
+            this._switchSettingsState(this._runnning);
+        })
     }
 }
