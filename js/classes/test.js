@@ -84,6 +84,7 @@ export class Test extends Run {
         let compareAlgorithms = (algorithm) ? [algorithm] : this.algorithms;
 
         for(let algorithm of compareAlgorithms) {
+            this._resetBoard();
             let computerSorted = this.computerSorted();
             this.chosenAlgorithm = algorithm;
 
@@ -91,7 +92,6 @@ export class Test extends Run {
             await this.run();
 
             this.result(computerSorted);
-            this._resetBoard();
         }
         this._testing = false;
     }
