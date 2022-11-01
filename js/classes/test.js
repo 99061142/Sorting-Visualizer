@@ -1,68 +1,98 @@
-export class Test {
-    constructor() {
-        this.testing = false;
-        this.speed = document.getElementById('listSortingSpeed')
-        this._testAmount = 1;
-        this._listSize = 20;
+import { Run } from './run.js';
+
+export class Test extends Run {
+    constructor(switchSettingsState, resetBoard) {
+        super(switchSettingsState);
+        this._testing = false;
+        this._resetBoard = resetBoard;
+        this._boardChildren = document.getElementById('board').children;
     }
 
-    compare(answer) {
-        if(!answer.length) { return console.warn(`'${this.algorithm}' EMPTY`) }
+    get algorithms() {
+        let list = [];
+        let algorithmButton = document.getElementById('algorithms');
+        let algorithms = algorithmButton.children;
 
-        let correctList = [...this.list].sort((a, b) => a - b);
-        let correct = answer.every((value, index) => value == correctList[index]); // Check if sorted correctly
-        
-        if(!correct) { return console.warn(`'${this.algorithm}' NOT WORKING`); }
-        console.log(`'${this.algorithm}' WORKING`);
-    }
-
-    listSizeTest() {
-        let listSize = this.list.length;
-        let listSizeRange = Number(this.sizeSlider.value);
-        
-        if(listSize != listSizeRange) { return console.warn(`list size NOT SAME`); }
-        console.log(`list size SAME`);
-    }
-
-    async algorithmTests() {
-        // Save list setting before testing
-        this.startingSpeed = this.speed.value;
-        this.startingAlgorithm = this.algorithmOptions.value // Save original algorithm
-        this.startingListSize = this.sizeSlider.value
-
-        this.speed.value = this.speed.max; // Set speed to max
-        this.sizeSlider.value = this._listSize;
-
-        // Test every algorithm that isn't disabled
-        for(let algorithm of this.algorithmOptions) {
-            if(algorithm.disabled) { 
-                console.warn(`'${algorithm.value}' DISABLED`);
-                continue; 
-            }
-
-            this.algorithmOptions.value = algorithm.value; // Set algorithm
-            this.updateList(); // Create new list
-
-            // Run algorithm and compare to correct answer
-            let answer = await this.run();
-            this.compare(answer);
+        for(let algorithm of algorithms) {
+            list.push(algorithm.value);
         }
-
-        // Reset list settings to original values
-        this.speed.value = this.startingSpeed;
-        this.algorithmOptions.value = this.startingAlgorithm;
-        this.sizeSlider.value = this.startingListSize;
-        this.updateList(); // Create new list
+        return list;
     }
 
-    async runTests() {
-        if(this.running) { return; } // Do not test algorithm if it's running
-        this.testing = true;
+    testingMessage() {
+        let message = `Currently testing '${this.chosenAlgorithm}'`
+        console.log(message);
+    }
 
-        // test (x) times 
-        for(let i = 0; i < this._testAmount; i++) {
-            this.listSizeTest(); // Check if list size is same as chosen size with range
-            await this.algorithmTests(); // Check if every algorithm is working correctly
+    successMessage() {
+        let message = `Successfully tested '${this.chosenAlgorithm}'`
+        console.log(message);
+    }
+
+    errorMessage() {
+        let message = `Error testing '${this.chosenAlgorithm}'`
+        console.warn(message);
+    }
+
+    elementsNumber() {
+        let list = [];
+
+        for(let i = 0; i < this._boardChildren.length; i++) {
+            let number = this._boardChildren[i].offsetHeight;
+            list.push(number);
         }
+        return list;
+    }
+
+    sortList(list) {
+        let sortedList = list.sort((a, b) => a - b);
+        return sortedList;
+    }
+
+    computerSorted() {
+        let list = this.elementsNumber();
+        let sortedList = this.sortList(list);
+        return sortedList;
+    }
+
+    selfSorted() {
+        let list = this.elementsNumber();
+        return list;
+    }
+
+    compare(list1, list2) {
+        let result = list1.every((value, index) => value === list2[index]);
+        return result;
+    }
+
+    result(computerSorted) {
+        let selfSorted = this.selfSorted();
+        let result = this.compare(computerSorted, selfSorted);
+
+        if(result) {
+            this.successMessage();
+        }
+        else {
+            this.errorMessage();
+        }
+    }
+
+    async test(algorithm=null) {
+        if(this._testing) { return; }
+        this._testing = true;
+
+        let compareAlgorithms = (algorithm) ? [algorithm] : this.algorithms;
+
+        for(let algorithm of compareAlgorithms) {
+            let computerSorted = this.computerSorted();
+            this.chosenAlgorithm = algorithm;
+
+            this.testingMessage();
+            await this.run();
+
+            this.result(computerSorted);
+            this._resetBoard();
+        }
+        this._testing = false;
     }
 }
