@@ -6,35 +6,34 @@
     cursor: pointer;
 }
 
-#list > div {
+#board > div {
     background-color: blue;
     vertical-align: top;
 }
 
-#list > div.sorted {
+#board > div.sorted {
     background-color: green;
 }
 
-#list > div.selected {
+#board > div.selected {
     background-color: red;
 }
 
-#list > div.next {
+#board > div.next {
     background-color: yellow;
 }
 
-#run-button {
+#runButton {
     color: green;
 }
 
-#run-button[disabled],
+#runButton[disabled],
 #algorithms[disabled],
 #newArray[disabled],
-#test-algorithms[disabled] {
+#testButton[disabled] {
     color: red;
 }
 
-#test-algorithms[disabled],
 #algorithms > option[disabled] {
     display: none !important;
 }
