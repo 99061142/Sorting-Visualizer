@@ -1,6 +1,6 @@
 export class UpdateBoardList {
     constructor() {
-        this.elements = document.getElementById('list').children;
+        this.elements = document.getElementById('board').children;
         this.elementsAmount = this.elements.length;
         this.dict = this.startingDict();
     }
@@ -93,7 +93,7 @@ export class UpdateBoardList {
     }
 
     sleep() {
-        let speedRange = document.getElementById('listSortingSpeed')
+        let speedRange = document.getElementById('speedSlider')
         let max_speed = speedRange.max
         let current = speedRange.value
         let ms = max_speed - current;
