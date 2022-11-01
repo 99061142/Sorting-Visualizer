@@ -16,7 +16,7 @@ export class SelectionSort extends UpdateBoardList {
             if(smallestNumber == null || this.number(i) < smallestNumber) {
                 // Remove the last selected element from the board
                 if(lastSelectedIndex != null) {
-                    this.standard(lastSelectedIndex);
+                    this.next(lastSelectedIndex);
                 }
                 // Set the current element as the selected element
                 this.selected(i);
