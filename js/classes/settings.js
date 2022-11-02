@@ -10,9 +10,9 @@ let algorithmOptions = document.getElementById("algorithms");
 let testButton = document.getElementById("testButton");
 
 // Classes
-let runClass = new Run(switchSettingsState);
-let testClass = new Test(switchSettingsState, resetBoard);
-let boardClass  = new Board();
+let run = new Run(switchSettingsState);
+let test = new Test(switchSettingsState, resetBoard);
+let board  = new Board();
 
 function switchSettingsState(state) {
     algorithmOptions.disabled = state;
@@ -23,12 +23,12 @@ function switchSettingsState(state) {
 }
 
 function resetBoard() {
-    boardClass.resetBoard();
+    board.resetBoard();
 }
 
 // Run the algorithm
 runButton.addEventListener('click', () => {
-    runClass.run();
+    run.run();
 });
 
 // When the user clicks the new array button, create a new array
@@ -43,15 +43,15 @@ algorithmOptions.addEventListener('change', () => {
 
 // When the window is resized, update the board
 window.addEventListener('resize', () => {
-    boardClass.resize();
+    board.resize();
 });
 
 // When the size is changed, update the board
 sizeSlider.addEventListener('input', () => {
-    boardClass.update();
+    board.update();
 });
 
 // When the test button is clicked, run the test
 testButton.addEventListener('click', () => {
-    testClass.test();
+    test.test();
 });
