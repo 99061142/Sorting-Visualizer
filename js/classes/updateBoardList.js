@@ -5,6 +5,11 @@ export class UpdateBoardList {
         this.dict = this.startingDict();
     }
 
+    get currentNumbers() {
+        return this.dict.map((element) => {
+            return element.number;
+        });
+    }
 
     number(i) {
         return this.elements[i].offsetHeight;
