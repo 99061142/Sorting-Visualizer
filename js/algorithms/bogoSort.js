@@ -27,10 +27,10 @@ export class BogoSort extends UpdateBoardList {
     async sort() {
         let sortedList = this.sortedList;
         let randomizedList = null;
+        let elements = [...this.elements];
 
         // Loop until board is sorted
         do {
-            let elements = [...this.elements];
             let list = this.randomizedList;
 
             // For every element on the board
