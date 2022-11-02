@@ -2,6 +2,7 @@ import { SelectionSort } from "../algorithms/selectionSort.js";
 import { BubbleSort } from "../algorithms/bubbleSort.js";
 import { InsertionSort } from "../algorithms/insertionSort.js";
 import { MergeSort } from "../algorithms/mergeSort.js";
+import { BogoSort } from "../algorithms/bogoSort.js";
 
 export class Run {
     constructor(switchSettingsState) {
@@ -30,6 +31,8 @@ export class Run {
                 return InsertionSort;
             case "merge-sort":
                 return MergeSort;
+            case "bogo-sort":
+                return BogoSort;
             default:
                 this._runnning = false;
                 this._switchSettingsState(this._runnning);
