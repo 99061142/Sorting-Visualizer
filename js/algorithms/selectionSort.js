@@ -10,7 +10,7 @@ export class SelectionSort extends UpdateBoardList {
         let smallestIndex = null;
         let lastSelectedIndex = null;
 
-        for(let i = start; i < this.elementsAmount; i++) {
+        for(let i = start; i < this.numbersAmount; i++) {
             await this.next(i);
 
             if(smallestNumber == null || this.number(i) < smallestNumber) {
