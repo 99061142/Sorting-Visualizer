@@ -5,70 +5,100 @@ export class MergeSort extends UpdateBoardList {
         super();
     }
 
-    left(dict) {
-        return dict.slice(0, this.mid(dict));
+    left(list) {
+        return list.slice(0, this.mid(list));
     }
 
-    right(dict) {
-        return dict.slice(this.mid(dict), dict.length);
+    right(list) {
+        return list.slice(this.mid(list), list.length);
     }
 
-    mid(dict) {
-        return Math.floor(dict.length / 2);
+    mid(list) {
+        return Math.floor(list.length / 2);
     }
 
-    async merge(dict, left, right) {
+    async merge(list, left, right) {
         let currentI = 0;
         let leftI = 0;
         let rightI = 0;
-        let startingDict = [...dict];
 
         while (leftI < left.length && rightI < right.length) {
             if (left[leftI].number < right[rightI].number) {
-                dict[currentI] = left[leftI];
+                // Update number list and element height
+                await this.next(list[currentI].index);
+                this.updateNumber(list[currentI].index, left[leftI].number);
+
+                // Update check list
+                list[currentI] = left[leftI];
                 leftI++;
             }
             else {
-                dict[currentI] = right[rightI];
+                // Update number list and element height
+                await this.next(list[currentI].index);
+                this.updateNumber(list[currentI].index, right[rightI].number);
+
+                // Update check list
+                list[currentI] = right[rightI];
                 rightI++;
             }
             currentI++;
         }
 
         while (leftI < left.length) {
-            dict[currentI] = left[leftI];
+            // Update number list and element height
+            await this.next(list[currentI].index);
+            this.updateNumber(list[currentI].index, left[leftI].number);
+
+            // Update check list
+            list[currentI] = left[leftI];
             leftI++;
             currentI++;
         }
 
         while (rightI < right.length) {
-            dict[currentI] = right[rightI];
+            // Update number list and element height
+            await this.next(list[currentI].index);
+            this.updateNumber(list[currentI].index, right[rightI].number);
+
+            // Update check list
+            list[currentI] = right[rightI];
             rightI++;
             currentI++;
         }
-
-        await this.sortElementHeights(startingDict, dict);
         this.clearBoardExceptSorted();
     }
 
-    async mergeSort(dict=this.dict) {
-        if (dict.length < 2) { return; }
+    async mergeSort(list) {
+        if (list.length < 2) { return; }
 
         // Sides
-        let left = this.left(dict);
-        let rigt = this.right(dict);
+        let left = this.left(list);
+        let right = this.right(list);
 
         // Recursion until list size is < 2
         await this.mergeSort(left);
-        await this.mergeSort(rigt);
-        
+        await this.mergeSort(right);
+
         // Merge the two sides from lowest to highest number
-        await this.merge(dict, left, rigt);
+        await this.merge(list, left, right);
+    }
+
+    get numbersWithIndexes() {
+        let list = [];
+
+        // Create a list with the number and the element index
+        for (let [i, number] of this.numbers.entries()) {
+            list.push({ 
+                number: number, 
+                index: i
+            });
+        }
+        return list;
     }
 
     async run() {
         this.clearBoard();
-        await this.mergeSort();
+        await this.mergeSort(this.numbersWithIndexes);
         await this.fullBoardSorted();
     }
 }
