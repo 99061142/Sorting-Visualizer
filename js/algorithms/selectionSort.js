@@ -28,7 +28,7 @@ export class SelectionSort extends UpdateBoardList {
             }
         }
         // Switch number of current element with smallest element
-        await this.switchHeight(start, smallestIndex);
+        await this.swapHeights(start, smallestIndex);
         
         this.sorted(start);
     }
@@ -36,7 +36,7 @@ export class SelectionSort extends UpdateBoardList {
     async run() {
         this.clearBoard(); // Clear the whole board before sorting
 
-        for(let i = 0; i < this.elementsAmount; i++) {
+        for(let i = 0; i < this.numbersAmount; i++) {
             await this.loop(i); // Switch current element with smallest element
             this.clearBoardExceptSorted(); // Clear board except elements that are already sorted
         }
