@@ -69,15 +69,17 @@ export class Board {
         }
     }
 
-    updateElementsWidth() {
+    updateElementsStyling() {
         for (let element of this.elements) {
             element.style.width = this.elementsWidth;
+            element.style.height = this.elementsHeight;
+            element.className = this._standardElementClasses.join(' ');
         }
     }
 
     update() {
         let difference = this.currentElementsAmount - this.boardElementsAmount;
-        this.updateElementsWidth();
+        this.updateElementsStyling();
 
         if (difference > 0) {
             this.addElements(difference);
