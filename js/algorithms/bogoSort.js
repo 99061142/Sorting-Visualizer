@@ -7,15 +7,9 @@ export class BogoSort extends UpdateBoardList {
     
     get sortedList() {
         // Get correctly sorted list
-        let list = this.currentNumbers;
+        let list = [...this.numbers];
         let sorted = list.sort((a, b) => a - b);
         return sorted;
-    }
-
-    get randomizedList() {
-        // Randomize list
-        let list = this.currentNumbers.sort(() => Math.random() - 0.5);
-        return list;
     }
 
     compare(sortedList, randomizedList) {
@@ -23,30 +17,41 @@ export class BogoSort extends UpdateBoardList {
         let result = sortedList.every((value, index) => value === randomizedList[index]);
         return result;
     }
+
+    get randomizedList() {
+        let list = [...this.numbers];
+        let currentIndex = list.length;
+        let randomIndex = null;
+
+        // While there can still be elements to shuffle
+        while (currentIndex != 0) {
+            // Pick a random index
+            randomIndex = Math.floor(Math.random() * currentIndex);
+            currentIndex--;
+
+            // Switch current index number with random index number
+            let temp = list[currentIndex];
+            list[currentIndex] = list[randomIndex];
+            list[randomIndex] = temp;
+        }
+        return list;
+    }
     
     async sort() {
         let sortedList = this.sortedList;
         let randomizedList = null;
-        let elements = [...this.elements];
 
-        // Loop until board is sorted
+        // Loop until list is sorted
         do {
-            let list = this.randomizedList;
+            randomizedList = this.randomizedList;
 
-            // For every element on the board
-            for(let [i, element] of elements.entries()) {
-                // Get a random number
-                let randomIndex = Math.floor(Math.random() * list.length);
-                let number = list[randomIndex];
-                list.splice(randomIndex, 1);
-
-                // Update element number with the random number
-                this.dict[i].number = number;
-                element.style.height = number + 'px';
+            // Switch list with randomized list
+            for(let i = 0; i < this.numbersAmount; i++) {
+                this.updateNumber(i, randomizedList[i]);
             }
             await this.sleep();
-            randomizedList = this.currentNumbers;
-        } while(!this.compare(sortedList, randomizedList));
+            this.clearBoardExceptSorted(); 
+        } while(!this.compare(sortedList, randomizedList))
     }
 
     async run() {
