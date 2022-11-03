@@ -16,9 +16,9 @@ export class BubbleSort extends UpdateBoardList {
         for(let i = 0; i < end; i++) {
             await this.next(i); 
 
-            // Switch current and right element height if right number is larger
+            // Switch current and right element height if right number is smaller
             if(this.nextSmallest(i)) { 
-                await this.swapHeights(i, i+1); 
+                this.swapValues(i, i+1); 
             } 
             this.selected(i+1);
         }
