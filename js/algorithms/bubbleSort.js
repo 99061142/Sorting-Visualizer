@@ -10,7 +10,7 @@ export class BubbleSort extends UpdateBoardList {
         Length of numbers minus the checked numbers
         It gets decreased by 1 so that it doesn't check the last number, because it's already the highest number
         */
-        let end = this.elementsAmount - current - 1;
+        let end = this.numbersAmount - current - 1;
 
         // Make list lowest to highest
         for(let i = 0; i < end; i++) {
@@ -18,7 +18,7 @@ export class BubbleSort extends UpdateBoardList {
 
             // Switch current and right element height if right number is larger
             if(this.nextSmallest(i)) { 
-                await this.switchHeight(i, i+1); 
+                await this.swapHeights(i, i+1); 
             } 
             this.selected(i+1);
         }
@@ -28,7 +28,7 @@ export class BubbleSort extends UpdateBoardList {
     async run() {
         this.clearBoard(); // Clear the whole board before sorting
 
-        for(let i = 0; i < this.elementsAmount; i++) {
+        for(let i = 0; i < this.numbersAmount; i++) {
             await this.loop(i); // Move highest number to the end of the list
             this.clearBoardExceptSorted(); // Clear board except elements that are already sorted
         }
