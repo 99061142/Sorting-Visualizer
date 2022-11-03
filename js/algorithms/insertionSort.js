@@ -21,7 +21,7 @@ export class InsertionSort extends UpdateBoardList {
         // Swap current and left element height if left number is larger
         while(current > 0 && !this.previousSmaller(current)) {
             await this.next(current-1);
-            this.swapValues(current, current-1);
+            this.swapNumbers(current, current-1);
             current--;
         }
     }

@@ -28,7 +28,7 @@ export class SelectionSort extends UpdateBoardList {
             }
         }
         // Switch number of current element with smallest element
-        this.swapValues(start, smallestIndex);
+        this.swapNumbers(start, smallestIndex);
         
         this.sorted(start);
     }
