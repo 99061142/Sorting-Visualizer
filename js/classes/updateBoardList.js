@@ -1,52 +1,49 @@
 export class UpdateBoardList {
     constructor() {
-        this.elements = document.getElementById('board').children;
-        this.elementsAmount = this.elements.length;
-        this.dict = this.startingDict();
+        this.elements = [...document.getElementById('board').children];
+        this.numbers = null;
+        this.init();
     }
 
-    get currentNumbers() {
-        return this.dict.map((element) => {
-            return element.number;
-        });
+    init() {
+        let list = [];
+        
+        // For every element on the board
+        for(let i = 0; i < this.elements.length; i++) {
+            let number = this.element(i).offsetHeight;
+            // Add the number to the list
+            list.push(number);
+        }
+        this.numbers = list;
     }
 
-    number(i) {
-        return this.elements[i].offsetHeight;
+    clearBoard() {
+        // Set every element on the board to standard if they are not standard
+        for(let i = 0; i < this.elementsAmount; i++) {
+            if(!this.elementStandard(i) && !this.elementStandard(i)) {
+                this.standard(i);
+            }
+        }
     }
 
     element(i) {
         return this.elements[i];
     }
 
-    nextSmallest(i) {
-        if(i+1 == this.elementsAmount) { return false; }
-
-        // Return if right number is larger than current number
-        let currentHeight = this.elements[i].offsetHeight;
-        let nextHeight = this.elements[i+1].offsetHeight;
-        return currentHeight > nextHeight;
-    }
-
-    previousSmaller(i) {
-        if(i == 0) { return false; }
-
-        // Return if left number is larger than current number
-        let currentHeight = this.elements[i].offsetHeight;
-        let previousHeight = this.elements[i-1].offsetHeight;
-        return currentHeight < previousHeight;
+    isSelected(i) {
+        return this.element(i).className.includes("selected");
     }
 
     elementSorted(i) {
-        return this.elements[i].className.includes("sorted");
+        return this.element(i).className.includes("sorted");
     }
 
     elementNext(i) {
-        return this.elements[i].className.includes("next");
+        return this.element(i).className.includes("next");
     }
 
     elementSelected(i) {
-        return this.elements[i].className.includes("selected");
+        return this.element(i).className.includes("selected");
     }
 
     elementStandard(i) {
@@ -57,22 +54,19 @@ export class UpdateBoardList {
         return !elementSorted && !elementNext && !elementSelected;
     }
 
-    clearBoard() {
-        // Set every element on the board to standard
-        for(let i = 0; i < this.elementsAmount; i++) {
-            if(!this.elementStandard(i)) {
-                this.standard(i);
-            }
+    sleep() {
+        let speedRange = document.getElementById('speedSlider')
+        let max_speed = speedRange.max
+        let current = speedRange.value
+        let ms = max_speed - current;
+        
+        if(ms) { 
+            return new Promise(resolve => setTimeout(resolve, ms)); 
         }
     }
 
-    async fullBoardSorted() {
-        // Set every element on the board to found if they are not already
-        for(let i = 0; i < this.elementsAmount; i++) {
-            if(!this.elementSorted(i)) { 
-                await this.sorted(i);
-            }
-        }
+    setElementClassname(i, classname) {
+        this.element(i).className = classname;
     }
 
     async sorted(i) {
@@ -93,86 +87,80 @@ export class UpdateBoardList {
         this.setElementClassname(i, "selected");
     }
 
-    setElementClassname(i, classname) {
-        this.elements[i].className = classname;
-    }
-
-    sleep() {
-        let speedRange = document.getElementById('speedSlider')
-        let max_speed = speedRange.max
-        let current = speedRange.value
-        let ms = max_speed - current;
-        
-        if(ms) { 
-            return new Promise(resolve => setTimeout(resolve, ms)); 
+    async fullBoardSorted() {
+        // Set every element on the board to sorted if they are not sorted
+        for(let i = 0; i < this.numbersAmount; i++) {
+            if(!this.elementSorted(i) && !this.elementSorted(i)) { 
+                await this.sorted(i);
+            }
         }
     }
 
     clearBoardExceptSorted() {
-        // For every element on the board
-        for(let i = 0; i < this.elementsAmount; i++) {
-            // If element was not found, set it to standard
-            if(!this.elementSorted(i)) { 
+        // Set every element on the board to standard if they are not sorted
+        for(let i = 0; i < this.numbersAmount; i++) {
+            if(!this.elementSorted(i) && !this.elementStandard(i)) { 
                 this.standard(i); 
             }
         }
     }
 
-    elementPixelHeight(elementIndex) {
-        return this.elements[elementIndex].style.height;
+    nextSmallest(i) {
+        if(i+1 == this.numbersAmount) { return false; }
+
+        // Return if right number is smaller than current number
+        let currentNumber = this.numbers[i];
+        let rightNumber = this.numbers[i+1];
+        return rightNumber < currentNumber;
     }
 
-    async switchHeight(currentIndex, otherIndex) {
-        let currentHeight = this.elementPixelHeight(currentIndex);
-        let otherHeight = this.elementPixelHeight(otherIndex);
+    previousSmaller(i) {
+        if(i == 0) { return false; }
 
-        // Swap element heights
-        this.elements[otherIndex].style.height = currentHeight;
-        this.elements[currentIndex].style.height = otherHeight;
+        // Return if left number is smaller than current number
+        let currentNumber = this.numbers[i];
+        let leftNumber = this.numbers[i-1];
+        return leftNumber < currentNumber;
     }
 
-    startingDict() {
-        let elementsList = Array.prototype.slice.call(this.elements);
-
-        // Create a dictionary with the elements and their heights 
-        let dict = elementsList.map((element, index) => {
-            return {
-                index: index,
-                number: element.offsetHeight
-            };
-        });
-        return dict;
+    get numbersAmount() {
+        return this.numbers.length;
     }
 
-    async sortElementHeights(startingDict, sortedDict) {
-        let highestNumber = null;
-        let highestIndex = null;
+    number(i) {
+        return this.numbers[i];
+    }
 
-        for(let i = 0; i < sortedDict.length; i++) {
-            let number = sortedDict[i].height;
-            let index = startingDict[i].index
+    async swapHeights(i, j) {
+        let numberOne = this.number(i);
+        let numberTwo = this.number(j);
 
-            // If the highest number is not set or the current number is higher than the highest number
-            if(highestNumber == null || number > highestNumber) {
-                // If the highest number is set, set the element with the highest number to standard
-                if(highestIndex != null) {
-                    await this.next(highestIndex);
-                }
+        this.updateHeight(i, numberOne);
+        this.updateHeight(j, numberTwo);
+    }
 
-                // Set the currently highest number and element to sorted and save the index and number
-                await this.sorted(index);
-                highestNumber = number;
-                highestIndex = index;
-            } 
-            else {
-                await this.next(index);
-            }
+    swapNumbers(i, j) {
+        let list = this.numbers;
 
-            // Set element height to the sorted height
-            let element = this.elements[index];
-            let pixelHeight = sortedDict[i].number + "px";
-            element.style.height = pixelHeight;
-        }
-        this.standard(highestIndex);
+        // Swap the elements at the left and right indices
+        let temp = list[i];
+        list[i] = list[j];
+        list[j] = temp;
+
+        // Swap the elements in the DOM
+        this.swapHeights(i, j);
+    }
+
+    updateHeight(i, height) {
+        let element = this.element(i);
+        let pixelHeight = height + "px";
+        element.style.height = pixelHeight;
+    }
+
+    async updateNumber(i, number) {
+        this.numbers[i] = number;
+
+        // Update element height in the DOM
+        this.updateHeight(i, number);
     }
 }
