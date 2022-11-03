@@ -17,6 +17,7 @@
 * Insertion sort
 * Merge sort
 * Quick sort
+* Bogo sort
 
 ## Note
 * This website is in the starting phase. It gets updated frequently.
