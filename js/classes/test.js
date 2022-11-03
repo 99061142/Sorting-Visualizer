@@ -77,13 +77,29 @@ export class Test extends Run {
         }
     }
 
-    async test(algorithm=null) {
+    askTesting(algorithm) {
+        let confirm = window.confirm(`Are you sure you want to test '${algorithm}' with an list length of ${this._boardChildren.length}?`); 
+        return confirm;
+    }
+
+    async test() {
         if(this._testing) { return; }
         this._testing = true;
 
-        let compareAlgorithms = (algorithm) ? [algorithm] : this.algorithms;
+        let algorithms = this.algorithms;
 
-        for(let algorithm of compareAlgorithms) {
+        // set bogosort as last algorithm to test
+        let bogoSort = algorithms.splice(algorithms.indexOf('bogo-sort'), 1);
+        algorithms.push(bogoSort[0]);
+
+        for(let algorithm of algorithms) {
+            // Ask if the user wants to test the algorithm if it's bogo-sort
+            if(algorithm == 'bogo-sort') {
+                if(!this.askTesting(algorithm)) {
+                    break;
+                }
+            }
+
             this._resetBoard();
             let computerSorted = this.computerSorted();
             this.chosenAlgorithm = algorithm;
