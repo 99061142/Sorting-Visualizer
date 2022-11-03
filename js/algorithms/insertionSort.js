@@ -8,7 +8,7 @@ export class InsertionSort extends UpdateBoardList {
 
     async loop(current) {
         // Set current element as "sorted" when left element is smaller 
-        if(this.previousSmaller(current)) {
+        if(!this.previousSmaller(current)) {
             // Delete the last sorted element from the board
             if(this.lastSortedIndex != null) {
                 this.standard(this.lastSortedIndex);
@@ -19,9 +19,9 @@ export class InsertionSort extends UpdateBoardList {
         }
 
         // Swap current and left element height if left number is larger
-        while(current > 0 && this.previousSmaller(current)) {
+        while(current > 0 && !this.previousSmaller(current)) {
             await this.next(current-1);
-            await this.swapHeights(current, current-1);
+            this.swapValues(current, current-1);
             current--;
         }
     }
