@@ -6,69 +6,64 @@ export class MergeSort extends UpdateBoardList {
     }
 
     left(list) {
-        return list.slice(0, this.mid(list));
+        list = list.slice(0, this.mid(list));
+        return list;
     }
 
     right(list) {
-        return list.slice(this.mid(list), list.length);
+        list = list.slice(this.mid(list), list.length);
+        return list;
     }
 
     mid(list) {
-        return Math.floor(list.length / 2);
+        let mid = Math.floor(list.length / 2);
+        return mid;
     }
 
-    async merge(list, left, right) {
+    async merge(list, left, right, fullListI) {
         let currentI = 0;
         let leftI = 0;
         let rightI = 0;
+        let number = null;
 
         while (leftI < left.length && rightI < right.length) {
-            if (left[leftI].number < right[rightI].number) {
-                // Update number list and element height
-                await this.next(list[currentI].index);
-                this.updateNumber(list[currentI].index, left[leftI].number);
-
-                // Update check list
-                list[currentI] = left[leftI];
+            if (left[leftI] < right[rightI]) {
+                number = left[leftI];
                 leftI++;
             }
             else {
-                // Update number list and element height
-                await this.next(list[currentI].index);
-                this.updateNumber(list[currentI].index, right[rightI].number);
-
-                // Update check list
-                list[currentI] = right[rightI];
+                number = right[rightI];
                 rightI++;
             }
+            await this.next(fullListI);
+            this.updateListNumber(currentI, fullListI, number, list);
+            fullListI++;
             currentI++;
         }
 
         while (leftI < left.length) {
-            // Update number list and element height
-            await this.next(list[currentI].index);
-            this.updateNumber(list[currentI].index, left[leftI].number);
-
-            // Update check list
-            list[currentI] = left[leftI];
+            number = left[leftI];
             leftI++;
+
+            await this.next(fullListI);
+            this.updateListNumber(currentI, fullListI, number, list);
+            fullListI++
             currentI++;
         }
 
         while (rightI < right.length) {
-            // Update number list and element height
-            await this.next(list[currentI].index);
-            this.updateNumber(list[currentI].index, right[rightI].number);
-
-            // Update check list
-            list[currentI] = right[rightI];
+            number = right[rightI];
             rightI++;
+
+            await this.next(fullListI);
+            this.updateListNumber(currentI, fullListI, number, list);
+            fullListI++;
             currentI++;
         }
         this.clearBoardExceptSorted();
     }
 
-    async mergeSort(list) {
+    async mergeSort(list, fullListI) {
         if (list.length < 2) { return; }
 
         // Sides
@@ -76,29 +71,16 @@ export class MergeSort extends UpdateBoardList {
         let right = this.right(list);
 
         // Recursion until list size is < 2
-        await this.mergeSort(left);
-        await this.mergeSort(right);
+        await this.mergeSort(left, fullListI);
+        await this.mergeSort(right, fullListI + this.mid(list));
 
         // Merge the two sides from lowest to highest number
-        await this.merge(list, left, right);
-    }
-
-    get numbersWithIndexes() {
-        let list = [];
-
-        // Create a list with the number and the element index
-        for (let [i, number] of this.numbers.entries()) {
-            list.push({ 
-                number: number, 
-                index: i
-            });
-        }
-        return list;
+        await this.merge(list, left, right, fullListI);
     }
 
     async run() {
         this.clearBoard();
-        await this.mergeSort(this.numbersWithIndexes);
+        await this.mergeSort(this.numbers, 0, this.numbers.length);
         await this.fullBoardSorted();
     }
 }
