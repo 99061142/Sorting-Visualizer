@@ -80,7 +80,7 @@ export class MergeSort extends UpdateBoardList {
 
     async run() {
         this.clearBoard();
-        await this.mergeSort(this.numbers, 0, this.numbers.length);
+        await this.mergeSort(this.numbers, 0);
         await this.fullBoardSorted();
     }
 }
