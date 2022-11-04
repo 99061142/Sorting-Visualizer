@@ -157,10 +157,18 @@ export class UpdateBoardList {
         element.style.height = pixelHeight;
     }
 
-    async updateNumber(i, number) {
+    updateNumber(i, number) {
         this.numbers[i] = number;
 
         // Update element height in the DOM
         this.updateHeight(i, number);
+    }
+
+    updateListNumber(listI, fullListI, number, list) {
+        // Set the number in the list
+        list[listI] = number;
+
+        // Set the number in the full list
+        this.updateNumber(fullListI, number);
     }
 }
