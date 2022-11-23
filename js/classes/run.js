@@ -7,7 +7,7 @@ import { QuickSort } from "../algorithms/quickSort.js";
 
 export class Run {
     constructor(switchSettingsState) {
-        this._runnning = false;
+        this.running = false;
         this._switchSettingsState = switchSettingsState;
         this._algorithmButton = document.getElementById("algorithms");
     }
@@ -37,21 +37,21 @@ export class Run {
             case "quick-sort":
                 return QuickSort;
             default:
-                this._runnning = false;
-                this._switchSettingsState(this._runnning);
+                this.running = false;
+                this._switchSettingsState(false);
                 throw new Error(`Algorithm '${this.chosenAlgorithm}' not found`);
         }
     }
 
     async run() {
-        if(this._runnning) { return; }
-        this._runnning = true;
-        this._switchSettingsState(this._runnning);
+        if(this.running) { return; }
+        this.running = true;
+        this._switchSettingsState(true);
 
         // Run the algorithm
         await new this.algorithmClass().run().then(() => {
-            this._runnning = false;
-            this._switchSettingsState(this._runnning);
+            this.running = false;
+            this._switchSettingsState(false);
         })
     }
 }
