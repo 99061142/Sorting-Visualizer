@@ -1,19 +1,14 @@
+import Cell from "./cell";
 import { Component } from "react";
 
 class Board extends Component {
-    constructor() {
-        super();
-    }
-
-    updateBoard(sizePercentage) {
-        console.log(this.state)
-    }
-
-
     render() {
+        const CELL_WIDTH = this.props.windowWidth / this.props.boardSize;
         return (
-            <div id="board">
-
+            <div className="d-flex justify-content-center">
+                {[...Array(this.props.boardSize)].map((_, i) =>
+                    <Cell width={CELL_WIDTH} key={i} />
+                )}
             </div>
         );
     }
