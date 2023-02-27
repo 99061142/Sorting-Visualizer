@@ -1,14 +1,14 @@
-import { Component } from "react";
-import { Button, Container, Row, Col, Navbar, Nav } from "react-bootstrap";
-
+import { Button, Container, Row, Col } from "react-bootstrap";
 import { Form } from "react-bootstrap";
+import Board from "./board";
 
-class Settings extends Component {
+class Settings extends Board {
     constructor() {
         super();
         this.state = {
             running: false,
-            speed: 50
+            speed: 50,
+            sizePercentage: 50
         };
     }
 
@@ -26,6 +26,16 @@ class Settings extends Component {
         this.setState({
             speed: val
         });
+    }
+
+    setSizePercentage(val) {
+        val = Number(val);
+        this.setState({
+            sizePercentage: val
+        });
+
+        //
+        this.updateBoard(val);
     }
 
     refresh() {
@@ -46,7 +56,7 @@ class Settings extends Component {
                     <Col xs={6} lg={true}>
                         <Form.Group>
                             <Form.Label className="text-white" htmlFor="speed">Size</Form.Label>
-                            <Form.Range id="speed" disabled={this.state.running} />
+                            <Form.Range id="speed" disabled={this.state.running} onChange={(e) => this.setSizePercentage(e.target.value)} />
                         </Form.Group>
                     </Col>
                     <Col xs={4} lg={true}>
