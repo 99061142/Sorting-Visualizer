@@ -8,7 +8,6 @@ class Settings extends Board {
         this.state = {
             running: false,
             speed: 50,
-            sizePercentage: 50
         };
     }
 
@@ -28,14 +27,11 @@ class Settings extends Board {
         });
     }
 
-    setSizePercentage(val) {
+    setSize(val) {
         val = Number(val);
         this.setState({
-            sizePercentage: val
+            size: val
         });
-
-        //
-        this.updateBoard(val);
     }
 
     refresh() {
@@ -56,7 +52,7 @@ class Settings extends Board {
                     <Col xs={6} lg={true}>
                         <Form.Group>
                             <Form.Label className="text-white" htmlFor="speed">Size</Form.Label>
-                            <Form.Range id="speed" disabled={this.state.running} onChange={(e) => this.setSizePercentage(e.target.value)} />
+                            <Form.Range id="speed" disabled={this.state.running} onChange={(e) => this.props.setBoardSize(e.target.value)} min={2} max={this.props.windowWidth} />
                         </Form.Group>
                     </Col>
                     <Col xs={4} lg={true}>
