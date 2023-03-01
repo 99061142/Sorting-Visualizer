@@ -7,12 +7,14 @@ class App extends Component {
     constructor() {
         super();
         this.state = {
-            boardSize: window.innerWidth * .25,
-            windowWidth: window.innerWidth
+            boardSize: Math.floor(window.innerWidth * .25),
+            windowWidth: window.innerWidth,
+            numbers: []
         };
     }
 
     componentDidMount() {
+        // Set the max size of the board as the resized window width
         window.addEventListener('resize', () => this.windowResized());
     }
 
@@ -24,17 +26,29 @@ class App extends Component {
     }
 
     setBoardSize = size => {
-        size = Number(size)
         this.setState({
             boardSize: size,
+        });
+    }
+
+    setNumbers = numbers => {
+        this.setState({
+            numbers: numbers
         });
     }
 
     render() {
         return (
             <>
-                <Settings {...this.state} setBoardSize={this.setBoardSize} />
-                <Board {...this.state} />
+                <Settings 
+                    {...this.state} 
+                    setBoardSize={this.setBoardSize} 
+                    setNumbers={this.setNumbers} 
+                />
+                <Board 
+                    {...this.state} 
+                    setNumbers={this.setNumbers} 
+                />
             </>
         );
     }
