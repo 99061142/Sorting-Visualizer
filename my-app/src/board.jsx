@@ -7,12 +7,12 @@ class Board extends Component {
         if (this.props.running) { return }
 
         // Make a list of random numbers with the size of the boardSize state
-        const LENGTH = this.props.boardSize;
+        const LENGTH = this.props.boardSize - 1;
         let board = []
         for (let i = 0; i <= LENGTH; i++) {
             const HEIGHT = Math.floor(Math.random() * 500)
             const DATA = {
-                height: HEIGHT,
+                number: HEIGHT,
                 name: ''
             };
             board.push(DATA);
@@ -25,7 +25,7 @@ class Board extends Component {
         window.addEventListener('resize', () => this.updateBoard());
 
         // Add the initialized board list
-        this.updateBoard(this.props.boardSize);
+        this.updateBoard();
     }
 
     render() {
@@ -35,7 +35,7 @@ class Board extends Component {
                 {this.props.board.map((data, i) =>
                     <Cell
                         width={CELL_WIDTH}
-                        height={data.height}
+                        height={data.number}
                         name={data.name}
                         key={i}
                     />
