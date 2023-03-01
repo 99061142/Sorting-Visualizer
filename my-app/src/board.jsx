@@ -8,8 +8,16 @@ class Board extends Component {
 
         // Make a list of random numbers with the size of the boardSize state
         const LENGTH = this.props.boardSize;
-        const NUMBERS = Array.from({ length: LENGTH }, () => Math.floor(Math.random() * 500));
-        this.props.setNumbers(NUMBERS);
+        let board = []
+        for (let i = 0; i <= LENGTH; i++) {
+            const HEIGHT = Math.floor(Math.random() * 500)
+            const DATA = {
+                height: HEIGHT,
+                name: ''
+            };
+            board.push(DATA);
+        }
+        this.props.setBoard(board);
     }
 
     componentDidMount() {
@@ -24,10 +32,11 @@ class Board extends Component {
         const CELL_WIDTH = this.props.windowWidth / this.props.boardSize;
         return (
             <div className="d-flex justify-content-center">
-                {this.props.numbers.map((number, i) =>
+                {this.props.board.map((data, i) =>
                     <Cell
                         width={CELL_WIDTH}
-                        height={number}
+                        height={data.height}
+                        name={data.name}
                         key={i}
                     />
                 )}
