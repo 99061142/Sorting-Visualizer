@@ -60,7 +60,7 @@ class Settings extends Board {
                         </Form.Group>
                     </Col>
                     <Col xs={4} lg={true} className="d-flex justify-content-center">
-                        <Button className="px-5 py-0" variant={this.state.running ? "danger" : "warning"}>New list</Button>
+                        <Button className="px-5 py-0" variant={this.state.running ? "danger" : "warning"} onClick={() => this.updateBoard()}>New list</Button>
                     </Col>
                     <Col xs={4} lg={true} className="d-flex justify-content-center">
                         <Button className="px-5 py-0" variant={this.state.running ? "danger" : "success"} onClick={() => this.run()}>Run</Button>
