@@ -21,6 +21,15 @@ class Algorithm extends Component {
         const CELL = this.getCell(index);
         CELL.name = "sorted"
     }
+
+    clearBoardExceptSorted() {
+        const BOARD = this.props.board;
+        for(let [i, data] of BOARD.entries()) {
+            if(data.name !== "sorted") {
+                data.name = "";
+            }
+        }
+    }
 }
 
 export default Algorithm;
