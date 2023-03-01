@@ -7,7 +7,7 @@ class Cell extends Component {
             'width': this.props.width
         };
         return (
-            <div ref={this.element} style={STYLING} className="bg-primary"></div>
+            <div ref={this.element} style={STYLING} className={`cell ${this.props.name}`}></div>
         );
     }
 }
