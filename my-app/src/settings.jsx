@@ -1,5 +1,4 @@
-import { Button, Container, Row, Col } from "react-bootstrap";
-import { Form } from "react-bootstrap";
+import { Button, Container, Row, Col, Form } from "react-bootstrap";
 import Board from "./board";
 
 class Settings extends Board {
@@ -27,16 +26,10 @@ class Settings extends Board {
         });
     }
 
-    setSize(val) {
+    async setSize(val) {
         val = Number(val);
-        this.setState({
-            size: val
-        });
-    }
-
-    refresh() {
-        // Refresh the page
-        window.location.reload();
+        await this.props.setBoardSize(val);
+        this.updateBoard();
     }
 
     render() {
@@ -51,8 +44,8 @@ class Settings extends Board {
                     </Col>
                     <Col xs={6} lg={true}>
                         <Form.Group>
-                            <Form.Label className="text-white" htmlFor="speed">Size</Form.Label>
-                            <Form.Range id="speed" disabled={this.state.running} onChange={(e) => this.props.setBoardSize(e.target.value)} min={2} max={this.props.windowWidth} />
+                            <Form.Label className="text-white" htmlFor="size">Size</Form.Label>
+                            <Form.Range id="size" disabled={this.state.running} onChange={(e) => this.setSize(e.target.value)} min={2} max={this.props.windowWidth} />
                         </Form.Group>
                     </Col>
                     <Col xs={4} lg={true}>
@@ -67,7 +60,7 @@ class Settings extends Board {
                         </Form.Group>
                     </Col>
                     <Col xs={4} lg={true} className="d-flex justify-content-center">
-                        <Button variant={this.state.running ? "danger" : "warning"}>Generate new array</Button>
+                        <Button className="px-5 py-0" variant={this.state.running ? "danger" : "warning"}>New list</Button>
                     </Col>
                     <Col xs={4} lg={true} className="d-flex justify-content-center">
                         <Button className="px-5 py-0" variant={this.state.running ? "danger" : "success"} onClick={() => this.run()}>Run</Button>
