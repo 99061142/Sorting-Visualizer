@@ -14,12 +14,16 @@ class Settings extends Board {
 
     async run() {
         const ALGORITHM = this.algorithm.current.value
-
+        const STATES = {
+            board: this.props.board,
+            boardSize: this.props.boardSize,
+            getSpeed: this.getSpeed
+        }
 
         this.props.setRunning(true);
         switch (ALGORITHM) {
             case "selection-sort":
-                await new selectionSort().run();
+                await new selectionSort(STATES).run();
                 break
             default:
                 throw Error(`Algorithm "${ALGORITHM}" was not found`);
