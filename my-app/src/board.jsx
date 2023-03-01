@@ -3,6 +3,9 @@ import { Component } from "react";
 
 class Board extends Component {
     updateBoard() {
+        // If the algorithm is running, return
+        if (this.props.running) { return }
+
         // Make a list of random numbers with the size of the boardSize state
         const LENGTH = this.props.boardSize;
         const NUMBERS = Array.from({ length: LENGTH }, () => Math.floor(Math.random() * 500));
