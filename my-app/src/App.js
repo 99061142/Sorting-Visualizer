@@ -9,7 +9,8 @@ class App extends Component {
         this.state = {
             boardSize: Math.floor(window.innerWidth * .25),
             windowWidth: window.innerWidth,
-            numbers: []
+            numbers: [],
+            running: false
         };
     }
 
@@ -23,6 +24,13 @@ class App extends Component {
         this.setState({
             windowWidth: WINDOW_WIDTH
         });
+    }
+
+    setRunning = bool => {
+        this.setState({
+            running: bool
+        });
+        
     }
 
     setBoardSize = size => {
@@ -42,6 +50,7 @@ class App extends Component {
             <>
                 <Settings 
                     {...this.state} 
+                    setRunning={this.setRunning}
                     setBoardSize={this.setBoardSize} 
                     setNumbers={this.setNumbers} 
                 />
