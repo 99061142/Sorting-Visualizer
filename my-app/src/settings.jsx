@@ -6,7 +6,6 @@ class Settings extends Board {
     constructor() {
         super();
         this.state = {
-            running: false,
             speed: 50,
         };
         this.algorithm = createRef();
