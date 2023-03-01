@@ -14,10 +14,13 @@ class Settings extends Board {
     run() {
         const ALGORITHM = this.algorithm.current.value
 
+
+        this.props.running(true);
         switch (ALGORITHM) {
             default:
                 throw Error(`Algorithm "${ALGORITHM}" was not found`);
         }
+        this.props.running(false);
     }
 
     getSpeed = () => {
