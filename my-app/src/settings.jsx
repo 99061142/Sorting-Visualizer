@@ -1,3 +1,4 @@
+import { createRef } from "react";
 import { Button, Container, Row, Col, Form } from "react-bootstrap";
 import Board from "./board";
 
@@ -8,10 +9,16 @@ class Settings extends Board {
             running: false,
             speed: 50,
         };
+        this.algorithm = createRef();
     }
 
     run() {
+        const ALGORITHM = this.algorithm.current.value
 
+        switch (ALGORITHM) {
+            default:
+                throw Error(`Algorithm "${ALGORITHM}" was not found`);
+        }
     }
 
     getSpeed = () => {
@@ -45,13 +52,13 @@ class Settings extends Board {
                     <Col xs={6} lg={true}>
                         <Form.Group>
                             <Form.Label className="text-white" htmlFor="size">Size</Form.Label>
-                            <Form.Range id="size" disabled={this.state.running} onChange={(e) => this.setSize(e.target.value)} min={2} max={this.props.windowWidth} />
+                            <Form.Range id="size" disabled={this.props.running} onChange={(e) => this.setSize(e.target.value)} min={2} max={this.props.windowWidth} />
                         </Form.Group>
                     </Col>
                     <Col xs={4} lg={true}>
                         <Form.Group>
                             <Form.Label className="text-white" htmlFor="algorithm">Algorithm</Form.Label>
-                            <Form.Select id="algorithm" onChange={(element) => this.setAlgorithm(element.target.value)} disabled={this.state.running}>
+                            <Form.Select ref={this.algorithm} id="algorithm" disabled={this.props.running}>
                                 <option value="selection-sort">Selection sort</option>
                                 <option value="bubble-sort">Bubble sort</option>
                                 <option value="insertion-sort">Insertion sort</option>
@@ -60,10 +67,10 @@ class Settings extends Board {
                         </Form.Group>
                     </Col>
                     <Col xs={4} lg={true} className="d-flex justify-content-center">
-                        <Button className="px-5 py-0" variant={this.state.running ? "danger" : "warning"} onClick={() => this.updateBoard()}>New list</Button>
+                        <Button className="px-5 py-0" variant={this.props.running ? "danger" : "warning"} onClick={() => this.updateBoard()}>New list</Button>
                     </Col>
                     <Col xs={4} lg={true} className="d-flex justify-content-center">
-                        <Button className="px-5 py-0" variant={this.state.running ? "danger" : "success"} onClick={() => this.run()}>Run</Button>
+                        <Button className="px-5 py-0" variant={this.props.running ? "danger" : "success"} onClick={() => this.run()}>Run</Button>
                     </Col>
                 </Row>
             </Container>
