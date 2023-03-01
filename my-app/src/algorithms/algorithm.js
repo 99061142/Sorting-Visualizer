@@ -30,6 +30,14 @@ class Algorithm extends Component {
             }
         }
     }
+
+    previousSmaller(index) {
+        const CURRENT_CELL = this.getCell(index);
+        const CURRENT_NUMBER = CURRENT_CELL.number;
+        const PREVIOUS_CELL = this.getCell(index-1);
+        const PREVIOUS_NUMBER = PREVIOUS_CELL.number;
+        return PREVIOUS_NUMBER < CURRENT_NUMBER
+    }
 }
 
 export default Algorithm;
