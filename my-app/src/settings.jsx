@@ -1,6 +1,7 @@
 import { createRef } from "react";
 import { Button, Container, Row, Col, Form } from "react-bootstrap";
 import Board from "./board";
+import selectionSort from "./algorithms/selectionSort";
 
 class Settings extends Board {
     constructor() {
@@ -11,16 +12,19 @@ class Settings extends Board {
         this.algorithm = createRef();
     }
 
-    run() {
+    async run() {
         const ALGORITHM = this.algorithm.current.value
 
 
-        this.props.running(true);
+        this.props.setRunning(true);
         switch (ALGORITHM) {
+            case "selection-sort":
+                await new selectionSort().run();
+                break
             default:
                 throw Error(`Algorithm "${ALGORITHM}" was not found`);
         }
-        this.props.running(false);
+        this.props.setRunning(false);
     }
 
     getSpeed = () => {
