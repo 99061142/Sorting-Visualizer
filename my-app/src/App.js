@@ -9,7 +9,7 @@ class App extends Component {
         this.state = {
             boardSize: Math.floor(window.innerWidth * .25),
             windowWidth: window.innerWidth,
-            numbers: [],
+            board: [],
             running: false
         };
     }
@@ -39,9 +39,9 @@ class App extends Component {
         });
     }
 
-    setNumbers = numbers => {
+    setBoard = board => {
         this.setState({
-            numbers: numbers
+            board: board
         });
     }
 
@@ -52,11 +52,11 @@ class App extends Component {
                     {...this.state} 
                     setRunning={this.setRunning}
                     setBoardSize={this.setBoardSize} 
-                    setNumbers={this.setNumbers} 
+                    setBoard={this.setBoard} 
                 />
                 <Board 
                     {...this.state} 
-                    setNumbers={this.setNumbers} 
+                    setBoard={this.setBoard} 
                 />
             </>
         );
