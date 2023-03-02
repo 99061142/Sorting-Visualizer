@@ -1,15 +1,9 @@
 import { Component } from "react";
 
-class Cell extends Component {
-    render() {
-        const STYLING = {
-            'height': this.props.height,
-            'width': this.props.width
-        };
-        return (
-            <div ref={this.element} style={STYLING} className={`cell ${this.props.name}`}></div>
-        );
-    }
+function Cell({ name, number, width }) {
+    return (
+        <div style={{ height: number, width: width }} className={`cell ${name}`}></div>
+    );
 }
 
 export default Cell;
