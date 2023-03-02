@@ -1,21 +1,20 @@
 import Cell from "./cell";
-import { Component } from "react";
+import { Component, createRef } from "react";
 
 class Board extends Component {
     updateBoard() {
         // If the algorithm is running, return
         if (this.props.running) { return }
 
-        // Make a list of random numbers with the size of the boardSize state
+        // Make the board list with the name and number of the cells
         const LENGTH = this.props.boardSize - 1;
-        let board = []
+        let board = [];
         for (let i = 0; i <= LENGTH; i++) {
-            const HEIGHT = Math.floor(Math.random() * 500)
-            const DATA = {
-                number: HEIGHT,
-                name: ''
-            };
-            board.push(DATA);
+            const RANDOM_NUMBER = Math.floor(Math.random() * 500) + 1;
+            board.push({
+                name: '',
+                number: RANDOM_NUMBER
+            });
         }
         this.props.setBoard(board);
     }
@@ -35,7 +34,7 @@ class Board extends Component {
                 {this.props.board.map((data, i) =>
                     <Cell
                         width={CELL_WIDTH}
-                        height={data.number}
+                        number={data.number}
                         name={data.name}
                         key={i}
                     />
