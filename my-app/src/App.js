@@ -7,7 +7,7 @@ class App extends Component {
     constructor() {
         super();
         this.state = {
-            boardSize: Math.floor(window.innerWidth * .25),
+            boardSize: window.innerWidth * .05,
             windowWidth: window.innerWidth,
             board: [],
             running: false
@@ -41,7 +41,7 @@ class App extends Component {
 
     setBoard = board => {
         this.setState({
-            board: board
+            board
         });
     }
 
