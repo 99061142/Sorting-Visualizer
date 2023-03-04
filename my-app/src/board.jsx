@@ -1,22 +1,22 @@
 import Cell from "./cell";
-import { Component, createRef } from "react";
+import { Component } from "react";
 
 class Board extends Component {
     updateBoard() {
         // If the algorithm is running, return
         if (this.props.running) { return }
 
+        // Clear all styling of the board
+        this.clearBoard();
+
         // Make the board list with the name and number of the cells
         const LENGTH = this.props.boardSize - 1;
         let board = [];
         for (let i = 0; i <= LENGTH; i++) {
             const RANDOM_NUMBER = Math.floor(Math.random() * 500) + 1;
-            board.push({
-                name: '',
-                number: RANDOM_NUMBER
-            });
+            board.push(RANDOM_NUMBER);
         }
-        this.props.setBoard(board);
+        this.props.setNumbers(board);
     }
 
     componentDidMount() {
@@ -27,15 +27,25 @@ class Board extends Component {
         this.updateBoard();
     }
 
+    clearBoard() {
+        // Clear all styling of the board
+        const BOARD = document.getElementById("board");
+        const CELLS = BOARD.children;
+        for (const cell of CELLS) {
+            if (cell.className !== '') {
+                cell.className = "standard";
+            }
+        }
+    }
+
     render() {
         const CELL_WIDTH = this.props.windowWidth / this.props.boardSize;
         return (
-            <div className="d-flex justify-content-center">
-                {this.props.board.map((data, i) =>
+            <div id="board" className="d-flex justify-content-center">
+                {this.props.numbers.map((number, i) =>
                     <Cell
                         width={CELL_WIDTH}
-                        number={data.number}
-                        name={data.name}
+                        number={number}
                         key={i}
                     />
                 )}
