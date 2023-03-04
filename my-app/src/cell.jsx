@@ -1,8 +1,6 @@
-import { Component } from "react";
-
-function Cell({ name, number, width }) {
+function Cell({ number, width }) {
     return (
-        <div style={{ height: number, width: width }} className={`cell ${name}`}></div>
+        <div style={{ height: number, width: width }} className="standard"></div>
     );
 }
 
