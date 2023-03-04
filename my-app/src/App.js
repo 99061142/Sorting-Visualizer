@@ -7,9 +7,9 @@ class App extends Component {
     constructor() {
         super();
         this.state = {
-            boardSize: window.innerWidth * .05,
+            boardSize: Math.floor(window.innerWidth * .05),
             windowWidth: window.innerWidth,
-            board: [],
+            numbers: [],
             running: false
         };
     }
@@ -39,10 +39,25 @@ class App extends Component {
         });
     }
 
-    setBoard = board => {
+    setNumbers = numbers => {
         this.setState({
-            board
+            numbers: numbers
         });
+    }
+
+    getNumbers = () => { 
+        const NUMBERS = this.state.numbers;
+        return NUMBERS
+    }
+
+    switchNumbers = (indexOne, indexTwo) => {
+        // indexOne = number of indexTwo, indexTwo = number of indexOne
+        let numbers = [...this.state.numbers];
+        let temp = numbers[indexOne];
+        let numberTwo = numbers[indexTwo];
+        numbers[indexOne] = numberTwo;
+        numbers[indexTwo] = temp;
+        this.setNumbers(numbers);
     }
 
     render() {
@@ -52,11 +67,13 @@ class App extends Component {
                     {...this.state} 
                     setRunning={this.setRunning}
                     setBoardSize={this.setBoardSize} 
-                    setBoard={this.setBoard} 
+                    switchNumbers={this.switchNumbers}
+                    setNumbers={this.setNumbers}
+                    getNumbers={this.getNumbers}
                 />
                 <Board 
                     {...this.state} 
-                    setBoard={this.setBoard} 
+                    setNumbers={this.setNumbers} 
                 />
             </>
         );
