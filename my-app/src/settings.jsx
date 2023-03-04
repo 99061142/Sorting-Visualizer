@@ -15,11 +15,14 @@ class Settings extends Board {
     async run() {
         const ALGORITHM = this.algorithm.current.value
         const STATES = {
-            board: this.props.board,
+            numbers: this.props.numbers,
             boardSize: this.props.boardSize,
-            getSpeed: this.getSpeed
-        }
+            getSpeed: this.getSpeed,
+            switchNumbers: this.props.switchNumbers,
+            getNumbers: this.props.getNumbers
+        };
 
+        this.clearBoard();
         this.props.setRunning(true);
         switch (ALGORITHM) {
             case "selection-sort":
@@ -56,7 +59,7 @@ class Settings extends Board {
                     <Col xs={6} lg={true}>
                         <Form.Group>
                             <Form.Label className="text-white" htmlFor="speed">Speed</Form.Label>
-                            <Form.Range id="speed" onChange={(element) => this.setSpeed(element.target.value)} />
+                            <Form.Range id="speed" value={this.state.speed} max={99} onChange={(element) => this.setSpeed(element.target.value)} />
                         </Form.Group>
                     </Col>
                     <Col xs={6} lg={true}>
