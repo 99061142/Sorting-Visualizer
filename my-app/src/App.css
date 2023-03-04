@@ -1,15 +1,15 @@
-.cell {
+.standard {
     background-color: #007bff;
 }
 
-.cell.sorted {
+.sorted {
     background-color: #28a745;
 }
 
-.cell.selected {
+.selected {
     background-color: #dc3545;
 }
 
-.cell.next {
+.next {
     background-color: #ffc107;
 }
