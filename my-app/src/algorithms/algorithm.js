@@ -57,6 +57,12 @@ class Algorithm extends Component {
         return NEXT_NUMBER < CURRENT_NUMBER
     }
 
+    previousSmallest(index) {
+        const CURRENT_NUMBER = this.getNumber(index);
+        const PREVIOUS_NUMBER = this.getNumber(index-1);
+        return PREVIOUS_NUMBER < CURRENT_NUMBER
+    }
+
     sleep() {
         let ms = 100 - this.props.getSpeed();
         if(ms == 0) { return }
