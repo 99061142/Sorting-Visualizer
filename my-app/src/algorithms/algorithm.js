@@ -51,7 +51,7 @@ class Algorithm extends Component {
         }
     }
 
-    async boardFound() {
+    async boardSorted() {
         const CELLS = [...this.getCells()];
         for (let [i, cell] of CELLS.entries()) {
             if(cell.className !== "sorted") {
