@@ -9,7 +9,7 @@ class BubbleSort extends Algorithm {
         // Move highest number to the right side of the board
         const END = this.props.boardSize - current - 1;
         for(let i = 0; i < END; i++) {
-            if(i >= 1) { await this.next(i-1); }
+            if(i >= 1) { this.next(i-1); }
             await this.selected(i);
 
             // Switch current and right number if right number is smaller
