@@ -51,6 +51,15 @@ class Algorithm extends Component {
         }
     }
 
+    async boardFound() {
+        const CELLS = [...this.getCells()];
+        for (let [i, cell] of CELLS.entries()) {
+            if(cell.className !== "sorted") {
+                await this.sorted(i)
+            }
+        }
+    }
+
     nextSmallest(index) {
         const CURRENT_NUMBER = this.getNumber(index);
         const NEXT_NUMBER = this.getNumber(index+1);
