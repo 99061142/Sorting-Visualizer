@@ -60,6 +60,10 @@ class Settings extends Board {
         this.updateBoard();
     }
 
+    algorithmChanged() {
+        this.updateBoard();
+    }
+
     render() {
         return (
             <Container className="bg-dark py-3" fluid>
@@ -79,7 +83,7 @@ class Settings extends Board {
                     <Col xs={4} lg={true}>
                         <Form.Group>
                             <Form.Label className="text-white" htmlFor="algorithm">Algorithm</Form.Label>
-                            <Form.Select ref={this.algorithm} id="algorithm" disabled={this.props.running}>
+                            <Form.Select ref={this.algorithm} id="algorithm" disabled={this.props.running} onChange={() => this.algorithmChanged()}>
                                 <option value="selection-sort">Selection sort</option>
                                 <option value="bubble-sort">Bubble sort</option>
                                 <option value="insertion-sort">Insertion sort</option>
