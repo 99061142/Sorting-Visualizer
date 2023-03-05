@@ -17,8 +17,8 @@ class insertionSort extends Algorithm {
         // Switch current number with left number until left number is smaller
         while(current > 0 && !this.previousSmallest(current)) {
             this.props.switchNumbers(current, current-1);
-            await this.next(current-1);
             current--;
+            await this.next(current);
         }
     }
     
