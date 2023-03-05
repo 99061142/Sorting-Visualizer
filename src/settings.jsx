@@ -83,7 +83,7 @@ class Settings extends Board {
                                 <option value="selection-sort">Selection sort</option>
                                 <option value="bubble-sort">Bubble sort</option>
                                 <option value="insertion-sort">Insertion sort</option>
-                                <option value="merge-sort">Merge sort</option>
+                                <option value="merge-sort" disabled>Merge sort</option>
                             </Form.Select>
                         </Form.Group>
                     </Col>
