@@ -2,6 +2,7 @@ import { createRef } from "react";
 import { Button, Container, Row, Col, Form } from "react-bootstrap";
 import Board from "./board";
 import selectionSort from "./algorithms/selectionSort";
+import bubbleSort from "./algorithms/bubbleSort";
 
 class Settings extends Board {
     constructor() {
@@ -27,6 +28,9 @@ class Settings extends Board {
         switch (ALGORITHM) {
             case "selection-sort":
                 await new selectionSort(STATES).run();
+                break
+            case "bubble-sort":
+                await new bubbleSort(STATES).run();
                 break
             default:
                 throw Error(`Algorithm "${ALGORITHM}" was not found`);
