@@ -3,6 +3,7 @@ import { Button, Container, Row, Col, Form } from "react-bootstrap";
 import Board from "./board";
 import selectionSort from "./algorithms/selectionSort";
 import bubbleSort from "./algorithms/bubbleSort";
+import insertionSort from "./algorithms/insertionSort";
 
 class Settings extends Board {
     constructor() {
@@ -31,6 +32,9 @@ class Settings extends Board {
                 break
             case "bubble-sort":
                 await new bubbleSort(STATES).run();
+                break
+            case "insertion-sort":
+                await new insertionSort(STATES).run();
                 break
             default:
                 throw Error(`Algorithm "${ALGORITHM}" was not found`);
