@@ -29,10 +29,8 @@ class Board extends Component {
     }
 
     componentDidMount() {
-        // When the window gets resized, update board list
         window.addEventListener('resize', () => this.windowResized());
 
-        // Add the initialized board list
         this.updateBoard();
     }
 
