@@ -23,9 +23,15 @@ class Board extends Component {
         this.props.setNumbers(board);
     }
 
+    windowResized() {
+        this.clearBoard();
+        this.updateBoard();
+    }
+
+
     componentDidMount() {
         // When the window gets resized, update board list
-        window.addEventListener('resize', () => this.updateBoard());
+        window.addEventListener('resize', () => this.windowResized());
 
         // Add the initialized board list
         this.updateBoard();
