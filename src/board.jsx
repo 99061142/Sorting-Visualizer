@@ -6,16 +6,20 @@ class Board extends Component {
         // If the algorithm is running, return
         if (this.props.running) { return }
 
-        // Clear all styling of the board
-        this.clearBoard();
+        // Get the max height of the board
+        const BOARD = document.getElementById("board");
+        const BOARD_TOP = BOARD.getBoundingClientRect().top;
+        const WINDOW_HEIGHT = window.innerHeight;
+        const MAX_HEIGHT = Math.floor(WINDOW_HEIGHT - BOARD_TOP);
 
-        // Make the board list with the name and number of the cells
-        const LENGTH = this.props.boardSize - 1;
+        // Create a list with numbers
+        const LENGTH = this.props.boardSize;
         let board = [];
-        for (let i = 0; i <= LENGTH; i++) {
-            const RANDOM_NUMBER = Math.floor(Math.random() * 500) + 1;
+        for (let i = 0; i < LENGTH; i++) {
+            const RANDOM_NUMBER = Math.floor(Math.random() * MAX_HEIGHT) + 1;
             board.push(RANDOM_NUMBER);
         }
+        // Set the numbers as current
         this.props.setNumbers(board);
     }
 
