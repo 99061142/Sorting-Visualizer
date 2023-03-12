@@ -76,8 +76,8 @@ class Settings extends Board {
                     </Col>
                     <Col xs={6} lg={true}>
                         <Form.Group>
-                            <Form.Label className="text-white" htmlFor="size">Size</Form.Label>
-                            <Form.Range id="size" disabled={this.props.running} onChange={(e) => this.setSize(e.target.value)} min={2} value={this.props.boardSize} max={this.props.windowWidth} />
+                            <Form.Label className="text-white" htmlFor="boardSize">Size</Form.Label>
+                            <Form.Range id="boardSize" disabled={this.props.running} onChange={(e) => this.setSize(e.target.value)} min={2} value={this.props.boardSize} max={this.props.windowWidth} />
                         </Form.Group>
                     </Col>
                     <Col xs={4} lg={true}>
