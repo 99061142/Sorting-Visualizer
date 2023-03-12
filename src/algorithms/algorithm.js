@@ -39,7 +39,7 @@ class Algorithm extends Component {
 
     standard(index) {
         const CELL_ELEMENT = this.getCell(index)
-        CELL_ELEMENT.className= "standard";
+        CELL_ELEMENT.className= '';
     }
 
     clearBoardExceptSorted() {

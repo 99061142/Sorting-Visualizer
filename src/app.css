@@ -1,15 +1,15 @@
-.standard {
+#board div {
     background-color: #007bff;
 }
 
 .sorted {
-    background-color: #28a745;
+    background-color: #28a745 !important;
 }
 
 .selected {
-    background-color: #dc3545;
+    background-color: #dc3545 !important;
 }
 
 .next {
-    background-color: #ffc107;
+    background-color: #ffc107 !important;
 }

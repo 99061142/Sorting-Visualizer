@@ -33,7 +33,7 @@ class Board extends Component {
         const CELLS = BOARD.children;
         for (const cell of CELLS) {
             if (cell.className !== '') {
-                cell.className = "standard";
+                cell.className = '';
             }
         }
     }
