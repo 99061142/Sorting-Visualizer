@@ -39,12 +39,10 @@ class Board extends Component {
     }
 
     render() {
-        const CELL_WIDTH = this.props.windowWidth / this.props.boardSize;
         return (
             <div id="board" className="d-flex justify-content-center">
                 {this.props.numbers.map((number, i) =>
                     <Cell
-                        width={CELL_WIDTH}
                         number={number}
                         key={i}
                     />
