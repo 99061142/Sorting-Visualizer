@@ -36,6 +36,7 @@ class Board extends Component {
     }
 
     windowResized() {
+        // If the algorithm is running, return
         if (this.props.running) { return }
 
         this.clearBoard();
