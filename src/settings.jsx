@@ -9,36 +9,41 @@ class Settings extends Board {
     constructor() {
         super();
         this.state = {
+            ...this.state,
             speed: 50,
         };
         this.algorithm = createRef();
     }
 
-    async run() {
+    getAlgorithm() {
         const ALGORITHM = this.algorithm.current.value
+        switch (ALGORITHM) {
+            case "selection-sort":
+                return selectionSort;
+            case "bubble-sort":
+                return bubbleSort;
+            case "insertion-sort":
+                return insertionSort;
+            default:
+                throw Error(`Algorithm "${ALGORITHM}" was not found`);
+        }
+    }
+
+    async run() {
+        this.clearBoard();
+        this.props.setRunning(true);
+
+        // Run the algorithm
+        const ALGORITHM = this.getAlgorithm();
         const STATES = {
             numbers: this.props.numbers,
-            boardSize: this.props.boardSize,
+            numbersAmount: this.state.numbersAmount,
             getSpeed: this.getSpeed,
             switchNumbers: this.props.switchNumbers,
             getNumbers: this.props.getNumbers
         };
+        await new ALGORITHM(STATES).run();
 
-        this.clearBoard();
-        this.props.setRunning(true);
-        switch (ALGORITHM) {
-            case "selection-sort":
-                await new selectionSort(STATES).run();
-                break
-            case "bubble-sort":
-                await new bubbleSort(STATES).run();
-                break
-            case "insertion-sort":
-                await new insertionSort(STATES).run();
-                break
-            default:
-                throw Error(`Algorithm "${ALGORITHM}" was not found`);
-        }
         this.props.setRunning(false);
     }
 
@@ -47,16 +52,15 @@ class Settings extends Board {
         return SPEED
     }
 
-    setSpeed(val) {
-        val = Number(val);
+    setSpeed(speed) {
+        speed = Number(speed);
         this.setState({
-            speed: val
+            speed
         });
     }
 
-    async setSize(val) {
-        val = Number(val);
-        await this.props.setBoardSize(val);
+    newList() {
+        this.clearBoard();
         this.updateBoard();
     }
 
@@ -65,8 +69,9 @@ class Settings extends Board {
         this.updateBoard();
     }
 
-    newList() {
-        this.clearBoard();
+    async sizeChanged(amount) {
+        amount = Number(amount);
+        await this.setNumbersAmount(amount);
         this.updateBoard();
     }
 
@@ -77,13 +82,13 @@ class Settings extends Board {
                     <Col xs={6} lg={true}>
                         <Form.Group>
                             <Form.Label className="text-white" htmlFor="speed">Speed</Form.Label>
-                            <Form.Range id="speed" value={this.state.speed} max={99} onChange={(element) => this.setSpeed(element.target.value)} />
+                            <Form.Range id="speed" value={this.state.speed} max={99} onChange={(e) => this.setSpeed(e.target.value)} />
                         </Form.Group>
                     </Col>
                     <Col xs={6} lg={true}>
                         <Form.Group>
-                            <Form.Label className="text-white" htmlFor="boardSize">Size</Form.Label>
-                            <Form.Range id="boardSize" disabled={this.props.running} onChange={(e) => this.setSize(e.target.value)} min={2} value={this.props.boardSize} max={this.props.windowWidth} />
+                            <Form.Label className="text-white" htmlFor="numbersAmount">Numbers</Form.Label>
+                            <Form.Range id="numbersAmount" value={this.state.numbersAmount} disabled={this.props.running} min={2} max={window.innerWidth} onChange={(e) => this.sizeChanged(e.target.value)} />
                         </Form.Group>
                     </Col>
                     <Col xs={4} lg={true}>
