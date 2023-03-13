@@ -20,7 +20,7 @@ class App extends Component {
 
     setNumbers = numbers => {
         this.setState({
-            numbers: numbers
+            numbers
         });
     }
 
