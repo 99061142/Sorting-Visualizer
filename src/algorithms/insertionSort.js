@@ -1,6 +1,6 @@
 import Algorithm from "./algorithm";
 
-class insertionSort extends Algorithm {
+class InsertionSort extends Algorithm {
     constructor(props) {
         super(props);
         this.sortedIndex = 0;
@@ -33,4 +33,4 @@ class insertionSort extends Algorithm {
     }
 }
 
-export default insertionSort;
+export default InsertionSort;
