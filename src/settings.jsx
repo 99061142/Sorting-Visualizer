@@ -72,6 +72,7 @@ class Settings extends Board {
     async sizeChanged(amount) {
         amount = Number(amount);
         await this.setNumbersAmount(amount);
+        this.clearBoard();
         this.updateBoard();
     }
 
