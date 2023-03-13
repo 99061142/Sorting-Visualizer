@@ -39,7 +39,7 @@ class Settings extends Board {
             numbers: this.props.numbers,
             numbersAmount: this.state.numbersAmount,
             getSpeed: this.getSpeed,
-            switchNumbers: this.props.switchNumbers,
+            setNumbers: this.props.setNumbers,
             getNumbers: this.props.getNumbers
         };
         await new ALGORITHM(STATES).run();
