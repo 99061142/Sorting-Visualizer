@@ -2,6 +2,19 @@ import Cell from "./cell";
 import { Component } from "react";
 
 class Board extends Component {
+    constructor() {
+        super();
+        this.state = {
+            numbersAmount: Math.floor(window.innerWidth * .05)
+        }
+    }
+
+    async setNumbersAmount(amount) {
+        this.setState({
+            numbersAmount: amount
+        });
+    }
+
     updateBoard() {
         // If the algorithm is running, return
         if (this.props.running) { return }
@@ -13,14 +26,13 @@ class Board extends Component {
         const MAX_HEIGHT = Math.floor(WINDOW_HEIGHT - BOARD_TOP);
 
         // Create a list with numbers
-        const LENGTH = this.props.boardSize;
-        let board = [];
-        for (let i = 0; i < LENGTH; i++) {
+        let numbers = [];
+        for (let i = 0; i < this.state.numbersAmount; i++) {
             const RANDOM_NUMBER = Math.floor(Math.random() * MAX_HEIGHT) + 1;
-            board.push(RANDOM_NUMBER);
+            numbers.push(RANDOM_NUMBER);
         }
         // Set the numbers as current
-        this.props.setNumbers(board);
+        this.props.setNumbers(numbers);
     }
 
     windowResized() {
