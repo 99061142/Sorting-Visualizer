@@ -7,7 +7,7 @@ class BubbleSort extends Algorithm {
 
     async loop(current) {
         // Move highest number to the right side of the board
-        const END = this.props.boardSize - current - 1;
+        const END = this.props.numbersAmount - current - 1;
         for(let i = 0; i < END; i++) {
             if(i >= 1) { this.next(i-1); }
             await this.selected(i);
@@ -22,7 +22,7 @@ class BubbleSort extends Algorithm {
     
     async run() {
         // For every number in the list
-        for(let i = 0; i < this.props.boardSize; i++) {
+        for(let i = 0; i < this.props.numbersAmount; i++) {
             await this.loop(i); // Move highest number to the right side of the board
             this.clearBoardExceptSorted(); // Clear board except elements that are already sorted
         }

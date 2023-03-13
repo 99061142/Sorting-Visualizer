@@ -25,7 +25,7 @@ class insertionSort extends Algorithm {
     
     async run() {
         // For every number in the list
-        for(let i = 0; i < this.props.boardSize; i++) {
+        for(let i = 0; i < this.props.numbersAmount; i++) {
             await this.loop(i); // Move current number to the left until left number is smaller
             this.clearBoardExceptSorted(); // Clear board except elements that are already sorted
         }
