@@ -14,7 +14,7 @@ class BubbleSort extends Algorithm {
 
             // Switch current and right number if right number is smaller
             if(this.nextSmallest(i)) { 
-                this.switchNumbers(i, i+1);
+                this.swapNumbers(i, i+1);
             }
         }
         this.sorted(END);

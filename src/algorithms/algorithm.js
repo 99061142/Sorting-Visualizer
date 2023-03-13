@@ -7,7 +7,7 @@ class Algorithm extends Component {
         return CELLS
     }
 
-    switchNumbers(indexOne, indexTwo) {
+    swapNumbers(indexOne, indexTwo) {
         // indexOne = number of indexTwo, indexTwo = number of indexOne
         const NUMBERS = this.props.getNumbers();
         const TEMP = NUMBERS[indexOne];

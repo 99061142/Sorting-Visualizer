@@ -24,7 +24,7 @@ class SelectionSort extends Algorithm {
         }
         // If the lowest index isn't the same as the starting index, switch cells
         if(current !== lowestIndex) {
-            this.switchNumbers(current, lowestIndex);
+            this.swapNumbers(current, lowestIndex);
         }
         await this.sorted(current);
     }
