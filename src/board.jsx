@@ -36,6 +36,8 @@ class Board extends Component {
     }
 
     windowResized() {
+        if (this.props.running) { return }
+
         this.clearBoard();
         this.updateBoard();
     }
