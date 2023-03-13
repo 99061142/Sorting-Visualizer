@@ -6,6 +6,17 @@ class Algorithm extends Component {
         const CELLS = BOARD.children;
         return CELLS
     }
+
+    switchNumbers(indexOne, indexTwo) {
+        // indexOne = number of indexTwo, indexTwo = number of indexOne
+        const NUMBERS = this.props.getNumbers();
+        const TEMP = NUMBERS[indexOne];
+        const NUMBER_TWO = NUMBERS[indexTwo];
+        NUMBERS[indexOne] = NUMBER_TWO;
+        NUMBERS[indexTwo] = TEMP;
+        this.props.setNumbers(NUMBERS);
+    }
+
     
     getCell(index) {
         const CELLS = this.getCells();

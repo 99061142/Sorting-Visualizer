@@ -17,16 +17,6 @@ class App extends Component {
             running: bool
         });
     }
-    
-    switchNumbers = (indexOne, indexTwo) => {
-        // indexOne = number of indexTwo, indexTwo = number of indexOne
-        const NUMBERS = [...this.state.numbers];
-        const TEMP = NUMBERS[indexOne];
-        const NUMBER_TWO = NUMBERS[indexTwo];
-        NUMBERS[indexOne] = NUMBER_TWO;
-        NUMBERS[indexTwo] = TEMP;
-        this.setNumbers(NUMBERS);
-    }
 
     setNumbers = numbers => {
         this.setState({
