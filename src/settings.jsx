@@ -69,7 +69,7 @@ class Settings extends Board {
         this.updateBoard();
     }
 
-    async sizeChanged(amount) {
+    async numbersAmountChanged(amount) {
         amount = Number(amount);
         await this.setNumbersAmount(amount);
         this.clearBoard();
@@ -89,7 +89,7 @@ class Settings extends Board {
                     <Col xs={6} lg={true}>
                         <Form.Group>
                             <Form.Label className="text-white" htmlFor="numbersAmount">Numbers</Form.Label>
-                            <Form.Range id="numbersAmount" value={this.state.numbersAmount} disabled={this.props.running} min={2} max={window.innerWidth} onChange={(e) => this.sizeChanged(e.target.value)} />
+                            <Form.Range id="numbersAmount" value={this.state.numbersAmount} disabled={this.props.running} min={2} max={window.innerWidth} onChange={(e) => this.numbersAmountChanged(e.target.value)} />
                         </Form.Group>
                     </Col>
                     <Col xs={4} lg={true}>
