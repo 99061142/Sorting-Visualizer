@@ -1,9 +1,10 @@
 import { createRef } from "react";
 import { Button, Container, Row, Col, Form } from "react-bootstrap";
 import Board from "./board";
-import selectionSort from "./algorithms/selectionSort";
-import bubbleSort from "./algorithms/bubbleSort";
-import insertionSort from "./algorithms/insertionSort";
+import SelectionSort from "./algorithms/selectionSort";
+import BubbleSort from "./algorithms/bubbleSort";
+import InsertionSort from "./algorithms/insertionSort";
+import MergeSort from "./algorithms/mergeSort";
 
 class Settings extends Board {
     constructor() {
@@ -19,11 +20,13 @@ class Settings extends Board {
         const ALGORITHM = this.algorithm.current.value
         switch (ALGORITHM) {
             case "selection-sort":
-                return selectionSort;
+                return SelectionSort;
             case "bubble-sort":
-                return bubbleSort;
+                return BubbleSort;
             case "insertion-sort":
-                return insertionSort;
+                return InsertionSort;
+            case "merge-sort":
+                return MergeSort;
             default:
                 throw Error(`Algorithm "${ALGORITHM}" was not found`);
         }
@@ -99,6 +102,7 @@ class Settings extends Board {
                                 <option value="selection-sort">Selection sort</option>
                                 <option value="bubble-sort">Bubble sort</option>
                                 <option value="insertion-sort">Insertion sort</option>
+                                <option value="merge-sort">Merge sort</option>
                             </Form.Select>
                         </Form.Group>
                     </Col>
