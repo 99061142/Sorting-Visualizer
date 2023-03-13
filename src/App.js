@@ -35,7 +35,6 @@ class App extends Component {
                 <Settings 
                     {...this.state} 
                     setRunning={this.setRunning}
-                    switchNumbers={this.switchNumbers}
                     setNumbers={this.setNumbers}
                     getNumbers={this.getNumbers}
                 />
