@@ -5,7 +5,7 @@ class Board extends Component {
     constructor() {
         super();
         this.state = {
-            numbersAmount: Math.floor(window.innerWidth * .05)
+            numbersAmount: Math.floor(window.innerWidth * .025)
         }
     }
 
