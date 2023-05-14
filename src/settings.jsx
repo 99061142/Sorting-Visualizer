@@ -1,121 +1,130 @@
-import { createRef } from "react";
-import { Button, Container, Row, Col, Form } from "react-bootstrap";
-import Board from "./board";
-import SelectionSort from "./algorithms/selectionSort";
-import BubbleSort from "./algorithms/bubbleSort";
-import InsertionSort from "./algorithms/insertionSort";
-import MergeSort from "./algorithms/mergeSort";
+import { Button, Container, Row, Col, FormGroup, FormLabel, FormSelect } from 'react-bootstrap';
+import FormRange from 'react-bootstrap/esm/FormRange';
+import { createRef, useState, useEffect } from 'react';
+import Run from './run';
+import RandomizeBoard from './randomizeBoard';
 
-class Settings extends Board {
-    constructor() {
-        super();
-        this.state = {
-            ...this.state,
-            speed: 50,
-        };
-        this.algorithm = createRef();
-    }
+function Settings({ setBoardSize }) {
+    const [running, setRunning] = useState(false);
+    const boardSizeRange = createRef(null);
+    const algorithm = createRef(null);
 
-    getAlgorithm() {
-        const ALGORITHM = this.algorithm.current.value
-        switch (ALGORITHM) {
-            case "selection-sort":
-                return SelectionSort;
-            case "bubble-sort":
-                return BubbleSort;
-            case "insertion-sort":
-                return InsertionSort;
-            case "merge-sort":
-                return MergeSort;
-            default:
-                throw Error(`Algorithm "${ALGORITHM}" was not found`);
-        }
-    }
-
-    async run() {
-        this.clearBoard();
-        this.props.setRunning(true);
-
-        // Run the algorithm
-        const ALGORITHM = this.getAlgorithm();
-        const STATES = {
-            numbers: this.props.numbers,
-            numbersAmount: this.state.numbersAmount,
-            getSpeed: this.getSpeed,
-            setNumbers: this.props.setNumbers,
-            getNumbers: this.props.getNumbers
-        };
-        await new ALGORITHM(STATES).run();
-
-        this.props.setRunning(false);
-    }
-
-    getSpeed = () => {
-        const SPEED = this.state.speed;
-        return SPEED
-    }
-
-    setSpeed(speed) {
-        speed = Number(speed);
-        this.setState({
-            speed
+    const run = async () => {
+        setRunning(true);
+        await Run({
+            algorithmName: algorithm.current.value
         });
+        setRunning(false);
     }
 
-    newList() {
-        this.clearBoard();
-        this.updateBoard();
+    const boardSizeChanged = () => {
+        const BOARD_SIZE = Number(boardSizeRange.current.value);
+        setBoardSize(BOARD_SIZE);
     }
 
-    algorithmChanged() {
-        this.clearBoard();
-        this.updateBoard();
-    }
+    // When the component is created, set the board size as the default value as the size range
+    useEffect(() => {
+        boardSizeChanged();
 
-    async numbersAmountChanged(amount) {
-        amount = Number(amount);
-        await this.setNumbersAmount(amount);
-        this.clearBoard();
-        this.updateBoard();
-    }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, []);
 
-    render() {
-        return (
-            <Container className="bg-dark py-3" fluid>
-                <Row>
-                    <Col xs={6} lg={true}>
-                        <Form.Group>
-                            <Form.Label className="text-white" htmlFor="speed">Speed</Form.Label>
-                            <Form.Range id="speed" value={this.state.speed} max={99} onChange={(e) => this.setSpeed(e.target.value)} />
-                        </Form.Group>
-                    </Col>
-                    <Col xs={6} lg={true}>
-                        <Form.Group>
-                            <Form.Label className="text-white" htmlFor="numbersAmount">Numbers</Form.Label>
-                            <Form.Range id="numbersAmount" value={this.state.numbersAmount} disabled={this.props.running} min={2} max={window.innerWidth} onChange={(e) => this.numbersAmountChanged(e.target.value)} />
-                        </Form.Group>
-                    </Col>
-                    <Col xs={4} lg={true}>
-                        <Form.Group>
-                            <Form.Label className="text-white" htmlFor="algorithm">Algorithm</Form.Label>
-                            <Form.Select ref={this.algorithm} id="algorithm" disabled={this.props.running} onChange={() => this.algorithmChanged()}>
-                                <option value="selection-sort">Selection sort</option>
-                                <option value="bubble-sort">Bubble sort</option>
-                                <option value="insertion-sort">Insertion sort</option>
-                                <option value="merge-sort">Merge sort</option>
-                            </Form.Select>
-                        </Form.Group>
-                    </Col>
-                    <Col xs={4} lg={true} className="d-flex justify-content-center">
-                        <Button className="px-5 py-0" variant={this.props.running ? "danger" : "warning"} onClick={() => this.newList()}>New list</Button>
-                    </Col>
-                    <Col xs={4} lg={true} className="d-flex justify-content-center">
-                        <Button className="px-5 py-0" variant={this.props.running ? "danger" : "success"} onClick={() => this.run()}>Run</Button>
-                    </Col>
-                </Row>
-            </Container>
-        );
-    }
+    return (
+        <Container
+            className='bg-dark py-3'
+            fluid
+        >
+            <Row>
+                <FormGroup
+                    as={Col}
+                    xs={6}
+                    lg={true}
+                >
+                    <FormLabel
+                        className='text-white'
+                        htmlFor='speed'
+                    >
+                        Speed
+                    </FormLabel>
+                    <FormRange
+                        id='speed'
+                        max={99}
+                    />
+                </FormGroup>
+                <FormGroup
+                    as={Col}
+                    xs={6}
+                    lg={true}
+                >
+                    <FormLabel
+                        className='text-white'
+                        htmlFor='boardSize'
+                    >
+                        Numbers
+                    </FormLabel>
+                    <FormRange
+                        ref={boardSizeRange}
+                        disabled={running}
+                        min={2}
+                        max={Math.floor(window.innerWidth * .25)}
+                        defaultValue={Math.floor(window.innerWidth * .024)}
+                        onMouseUp={boardSizeChanged}
+                        onPointerUp={boardSizeChanged}
+                    />
+                </FormGroup>
+                <FormGroup
+                    as={Col}
+                    xs={4}
+                    lg={true}
+                >
+                    <FormLabel
+                        className='text-white'
+                        htmlFor='algorithm'
+                    >
+                        Algorithm
+                    </FormLabel>
+                    <FormSelect
+                        ref={algorithm}
+                        disabled={running}
+                        defaultValue='insertion-sort'
+                    >
+                        <option value='selection-sort'>Selection sort</option>
+                        <option value='bubble-sort'>Bubble sort</option>
+                        <option value='insertion-sort'>Insertion sort</option>
+                    </FormSelect>
+                </FormGroup>
+                <Col
+                    xs={4}
+                    lg={true}
+                    className='d-flex justify-content-center'
+                >
+                    <Button
+                        id='randomizeBoard'
+                        className='px-5 py-0'
+                        variant={running ? 'danger' : 'warning'}
+                        disabled={running}
+                        onClick={() => RandomizeBoard()}
+                    >
+                        New board
+                    </Button>
+                </Col>
+                <Col
+                    xs={4}
+                    lg={true}
+                    className='d-flex justify-content-center'
+                >
+                    <Button
+                        className='px-5 py-0'
+                        variant={running ? 'danger' : 'success'}
+                        disabled={running}
+                        onClick={() => run()}
+                    >
+                        Run
+                    </Button>
+                </Col>
+            </Row>
+        </Container>
+    );
 }
 
 export default Settings;
