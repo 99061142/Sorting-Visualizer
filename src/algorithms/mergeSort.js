@@ -1,10 +1,6 @@
-import Algorithm from "./algorithm";
+import Algorithm from './algorithm';
 
-class MergeSort extends Algorithm {
-    constructor(props) {
-        super(props);
-    }
-    
+class MergeSort extends Algorithm {    
     async run() {
 
     }
