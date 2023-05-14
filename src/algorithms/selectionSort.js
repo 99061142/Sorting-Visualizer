@@ -1,39 +1,38 @@
-import Algorithm from "./algorithm";
+import Algorithm from './algorithm';
 
 class SelectionSort extends Algorithm {
-    constructor(props) {
-        super(props);
-    }
+    async loop(startIndex) {
+        await this.selected(startIndex);
 
-    async loop(current) {
-        await this.selected(current);
-
-        // Find the lowest cell number
-        let lowestNum = this.getNumber(current);
-        let lowestIndex = current;
-        for(let i = current+1; i < this.props.numbersAmount; i++) {
+        let lowestNumber = this.getNumber(startIndex);
+        let lowestIndex = startIndex;
+        for(let i = startIndex+1; i < this.boardSize; i++) {
             const NUMBER = this.getNumber(i);
-            if(NUMBER < lowestNum) {
-                await this.next(lowestIndex);
-                await this.selected(i);
-                lowestIndex = i;
-                lowestNum = NUMBER;
-            } else {
+            if(NUMBER >= lowestNumber) {
                 await this.next(i);
+                continue
             }
+            await this.next(lowestIndex);
+            await this.selected(i);
+            lowestIndex = i;
+            lowestNumber = NUMBER;
         }
-        // If the lowest index isn't the same as the starting index, switch cells
-        if(current !== lowestIndex) {
-            this.swapNumbers(current, lowestIndex);
+        // If the startIndex number (starting point of the search) isn't the same as the lowest number, swap numbers
+        if(startIndex !== lowestIndex) {
+            this.swapNumbers(startIndex, lowestIndex);
         }
-        await this.sorted(current);
+        await this.sorted(startIndex);
     }
     
     async run() {
+        await this.clearBoard();
+
         // For every number in the list
-        for(let i = 0; i < this.props.numbersAmount; i++) {
-            await this.loop(i); // Move lowest number to the left of the list
-            this.clearBoardExceptSorted(); // Clear board except elements that are already sorted
+        for(let i = 0; i < this.boardSize; i++) {
+            // Move lowest number to the left of the list
+            await this.loop(i);
+            // Clear board except elements that are already sorted
+            this.clearBoardExceptSorted();
         }
     }
 }
