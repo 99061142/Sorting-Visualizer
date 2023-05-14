@@ -87,6 +87,7 @@ function Settings({ setBoardSize }) {
                         ref={algorithm}
                         disabled={running}
                         defaultValue='insertion-sort'
+                        onChange={RandomizeBoard}
                     >
                         <option value='selection-sort'>Selection sort</option>
                         <option value='bubble-sort'>Bubble sort</option>
