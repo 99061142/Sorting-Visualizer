@@ -1,18 +1,17 @@
-import Algorithm from "./algorithm";
+import Algorithm from './algorithm';
 
 class BubbleSort extends Algorithm {
-    constructor(props) {
-        super(props);
-    }
-
-    async loop(current) {
+    async loop(startIndex) {
         // Move highest number to the right side of the board
-        const END = this.props.numbersAmount - current - 1;
+        const END = this.boardSize - startIndex - 1;
         for(let i = 0; i < END; i++) {
-            if(i >= 1) { this.next(i-1); }
+            // Show the cell that gets moved
+            if(i >= 1) { 
+                this.next(i-1); 
+            }
             await this.selected(i);
 
-            // Switch current and right number if right number is smaller
+            // If the right number is smaller than the current number, swap numbers
             if(this.nextSmallest(i)) { 
                 this.swapNumbers(i, i+1);
             }
@@ -21,10 +20,14 @@ class BubbleSort extends Algorithm {
     }
     
     async run() {
+        await this.clearBoard();
+
         // For every number in the list
-        for(let i = 0; i < this.props.numbersAmount; i++) {
-            await this.loop(i); // Move highest number to the right side of the board
-            this.clearBoardExceptSorted(); // Clear board except elements that are already sorted
+        for(let i = 0; i < this.boardSize; i++) {
+            // Move highest number to the right side of the board
+            await this.loop(i);
+            // Clear board except elements that are already sorted
+            this.clearBoardExceptSorted();
         }
     }
 }
