@@ -1,35 +1,34 @@
-import Algorithm from "./algorithm";
+import Algorithm from './algorithm';
 
 class InsertionSort extends Algorithm {
-    constructor(props) {
-        super(props);
-        this.sortedIndex = 0;
+    constructor() {
+        super();
+        this.sortedIndex = 1;
     }
 
-    async loop(current) {
+    async loop(cellIndex) {   
         this.standard(this.sortedIndex);
-        
-        // When the previous cell isn't smaller, return
-        if(this.previousSmallest(current)) { return }
+        await this.sorted(cellIndex);
 
-        await this.sorted(current);
-
-        // Switch current number with left number until left number is smaller
-        while(current > 0 && !this.previousSmallest(current)) {
-            this.swapNumbers(current, current-1);
-            current--;
-            await this.next(current);
+        while(cellIndex > 0 && !this.previousSmallest(cellIndex)) {
+            this.swapNumbers(cellIndex, cellIndex-1);
+            await this.next(cellIndex-1);
+            cellIndex--;
         }
     }
-    
     
     async run() {
+        await this.clearBoard();
+
         // For every number in the list
-        for(let i = 0; i < this.props.numbersAmount; i++) {
-            await this.loop(i); // Move current number to the left until left number is smaller
-            this.clearBoardExceptSorted(); // Clear board except elements that are already sorted
+        for(let i = 1; i < this.boardSize; i++) {
+            // Move current number to the left until left number is smaller
+            await this.loop(i);
+            // Clear board except elements that are already sorted
+            this.clearBoardExceptSorted();
         }
-        await this.boardSorted(); // Set all cells to sorted
+        // Set all cells to sorted
+        await this.setBoardSorted();
     }
 }
 
