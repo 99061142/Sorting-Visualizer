@@ -104,7 +104,7 @@ function Settings({ setBoardSize }) {
                         className='px-5 py-0'
                         variant={running ? 'danger' : 'warning'}
                         disabled={running}
-                        onClick={() => RandomizeBoard()}
+                        onClick={RandomizeBoard}
                     >
                         New board
                     </Button>
@@ -118,7 +118,7 @@ function Settings({ setBoardSize }) {
                         className='px-5 py-0'
                         variant={running ? 'danger' : 'success'}
                         disabled={running}
-                        onClick={() => run()}
+                        onClick={run}
                     >
                         Run
                     </Button>
