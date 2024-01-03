@@ -1,0 +1,14 @@
+
+.cell { 
+    &.sorted {
+        background-color: #28a745 !important;
+    }
+
+    &.selected {
+        background-color: #dc3545 !important;
+    }
+
+    &.next {
+        background-color: #ffc107 !important;
+    }
+}
