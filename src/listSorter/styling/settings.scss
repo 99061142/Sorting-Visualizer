@@ -1,0 +1,44 @@
+.dropdown-toggle {
+    // When the dropdown is open, or the user left clicks on the toggle button
+    &.show,
+    &:active:hover {
+        background-color: #28a745 !important;
+        color: white !important;
+    }
+
+    // When the user hovers over the toggle button
+    &:hover {
+        color: #28a745;
+    }
+
+    background-color: transparent !important;
+    border-color: transparent !important;
+}
+
+.dropdown-item {
+    // If the users hovers over the item that isn't currently active
+    &:hover:not(.active) {
+        background-color: #28a745 !important;
+    }
+
+    // When the user hovers over the item
+    &:hover {
+        color: white !important;
+    }
+
+    // Active item
+    &.active {
+        background-color: #0d6efd !important;
+    }
+    
+    // The standard background color is transparent
+    &:not(.active) {
+        background-color: transparent !important;
+    }
+
+    &.disabled {
+        color: #dc3545 !important;
+    }
+
+    color: #212529 !important;
+}
