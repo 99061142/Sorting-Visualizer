@@ -6,35 +6,37 @@ class App extends Component {
     constructor() {
         super();
         this.state = {
-            boardMounted: false
+            settingsComponentMounted: false
         }
         this.settings = createRef(null);
         this.board = createRef(null);
     }
 
-    setBoardMounted = (bool) => {
+    setSettingsComponentMounted = (bool) => {
         this.setState({
-            boardMounted: bool
+            settingsComponentMounted: bool
         });
     }
 
-    get boardMounted() {
-        const boardMounted = this.state.boardMounted;
-        return boardMounted
+    get settingsComponentMounted() {
+        const settingsComponentMounted = this.state.settingsComponentMounted;
+        return settingsComponentMounted
     }
     
     render() {
         return (
             <>
                 <Settings
-                    board={this.board}
-                    boardMounted={this.boardMounted}
                     ref={this.settings}
+                    board={this.board}
+                    setSettingsComponentMounted={this.setSettingsComponentMounted}
                 />
-                <Board
-                    ref={this.board}
-                    setBoardMounted={this.setBoardMounted}
-                />
+                {this.state.settingsComponentMounted &&
+                    <Board
+                        ref={this.board}    
+                        settings={this.settings}
+                    />
+                }
             </>
         )
     }
