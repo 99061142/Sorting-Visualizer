@@ -6,28 +6,36 @@ class Board extends Component {
         super();
         this.state = {
             cells: [],
-            size: Math.floor(this.maxSize * .25)
+            size: 0
         };
+        this._ref = createRef(null);
         this.minSize = 10;
-        this.ref = createRef(null);
     }
 
     componentDidMount() {
-        // Add the cells on the board based on the init state size
-        this.setCells();
+        // Set the init board size
+        this.size = this.props.initSize || Math.floor(this.maxSize * .1);
 
-        // Set the App component "boardMounted" state to true.
-        // The Settings component would throw an error if the "boardMounted" state wasn't added.
-        // The error happens because the Settings component uses the functionality of the Board component.
-        this.props.setBoardMounted(true);
+        //! Set the BoardComponentMounted state to "true".
+        //! This is needed for size range inside the Settings component. 
+        //! The range uses the Board class functionality, and must render AFTER the board was mounted
+        this.props.setBoardComponentMounted(true);
     }
 
-    setCells() {
-        // Create a list with references for the cell components and set the list as the "cells" state.
-        // The length of the list is based on the "size" state
+    set size(size) {
+        // Throw an error if the size is out of bounds
+        if (size < this.minSize) throw RangeError(`The given board size (${size}) is smaller than the min board size (${this.minSize})`);
+        if (size > this.maxSize) throw RangeError(`The given board size (${size}) is larger than the max board size (${this.maxSize})`);
+
+        // Create a list with references for the Cells components that gets rendered with this list
         let cells = [];
-        for (let i = 0; i < this.state.size; i++) cells.push(createRef(null));
+        for (let i = 0; i < size; i++) {
+            cells.push(createRef(null));
+        }
+
+        // Set the new size and cells references
         this.setState({
+            size,
             cells
         });
     }
@@ -37,21 +45,18 @@ class Board extends Component {
         return size
     }
 
-    set size(size) {
-        if (size > this.maxSize) throw RangeError(`The given board size (${size}) is larger than the max board size (${this.maxSize})`);
-        if (size < this.minSize) throw RangeError(`The given board size (${size}) is smaller than the min board size (${this.minSize})`);
-
-        this.setState({
-            size
-        }, () => this.setCells());
-    }
-
     get maxSize() {
-        // Return the max amount of cells
+        // Minimum padding of the cell without borders
         const cellPadding = 5;
+
+        // Pixels of 1 border side
         const cellBorder = 1;
+
+        // Minimum cell width
         const cellWidth = cellPadding + (cellBorder * 2);
-        const maxSize = Math.floor(window.innerWidth / cellWidth);
+
+        // Divide the board width with the minimum cell width, and return the answer
+        const maxSize = Math.floor(this.width / cellWidth);
         return maxSize
     }
 
@@ -60,9 +65,25 @@ class Board extends Component {
         return cells
     }
 
+    get width() {
+        // Return the width of the board
+        const board = this._ref.current;
+        const width = board.getBoundingClientRect().width;
+        return width
+    }
+
+    get top() {
+        // Return the top of the board
+        const board = this._ref.current;
+        const height = board.getBoundingClientRect().top;
+        return height
+    }
+
     clear() {
         // Clear the type of the cells
-        for (const cell of this.state.cells) cell.current.type = '';
+        for (const cell of this.cells) {
+            cell.current.type = '';
+        }
     }
 
     randomize() {
@@ -70,30 +91,18 @@ class Board extends Component {
         this.clear();
 
         // Randomize every cell number
-        for (const cell of this.state.cells) cell.current.randomizeNumber();
-    }
-
-    get width() {
-        // Return the width of the board
-        const board = this.ref.current;
-        const width = board.getBoundingClientRect().width;
-        return width
-    }
-
-    get top() {
-        // Return the starting height of the board
-        const board = this.ref.current;
-        const height = board.getBoundingClientRect().top;
-        return height
+        for (const cell of this.cells) {
+            cell.current.randomizeNumber();
+        }
     }
 
     render() {
         return (
             <div
                 className="d-flex justify-content-center"
-                ref={this.ref}
+                ref={this._ref}
             >
-                {this.state.cells
+                {this.cells
                     .map(
                         (ref, i) => <Cell
                             width={this.width / this.size}
