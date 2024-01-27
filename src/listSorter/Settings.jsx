@@ -10,15 +10,17 @@ class Settings extends Component {
         super();
         this.state = {
             running: false,
-            algorithmIndex: 3
+            algorithmIndex: 0
         };
-        this.algorithms = [
+        this._algorithms = [
             "Insertion Sort",
             "Bubble Sort",
             "Selection Sort",
-            "Merge Sort"
+            "Merge Sort",
+            "Bogo Sort"
         ];
         this.speedRangeRef = createRef(null);
+        this.boardSizeRangeRef = createRef(null);
     }
 
     algorithmChanged(algorithmIndex) {
@@ -43,20 +45,31 @@ class Settings extends Component {
 
     get algorithm() {
         // Return the algorithm name
-        const algorithm = this.algorithms[this.state.algorithmIndex];
+        const algorithm = this._algorithms[this.state.algorithmIndex];
         return algorithm
     }
 
     boardSizeChanged(ev) {
-        const newBoardSize = Number(ev.target.value);
-        const board = this.props.board.current;
+        const size = Number(ev.target.value);
 
         // If the board size isn't changed, return
-        if (newBoardSize === board.size) return
+        const board = this.props.board.current;
+        if (size === board.state.size) return
 
-        // Randomize the numbers on the board and change the size after
+        // Randomize the numbers on the board
         board.randomize();
-        board.size = newBoardSize;
+
+        // Change the board size
+        board.size = size;
+    }
+
+    getSleepMS = () => {
+        // Return the amount of MS the algorithm needs to sleep when needed
+        const speedRangeRef = this.speedRangeRef.current
+        const maxSpeed = Number(speedRangeRef.max);
+        const currentSpeed = Number(speedRangeRef.value);
+        const ms = maxSpeed - currentSpeed + 1;
+        return ms
     }
 
     render() {
@@ -85,7 +98,7 @@ class Settings extends Component {
                             Algorithms
                         </DropdownToggle>
                         <DropdownMenu>
-                            {this.algorithms
+                            {this._algorithms
                                 .map((algorithm, i) =>
                                     <DropdownItem
                                         as={Button}
@@ -98,7 +111,7 @@ class Settings extends Component {
                                 )}
                         </DropdownMenu>
                     </Dropdown>
-                    {this.props.boardMounted &&
+                    {this.props.boardComponentMounted &&
                         <FormGroup
                             as={Col}
                             xs={4}
@@ -111,6 +124,7 @@ class Settings extends Component {
                                 Size
                             </FormLabel>
                             <FormRange
+                                ref={this.boardSizeRangeRef}
                                 id="size"
                                 style={{
                                     touchAction: "none"
@@ -118,7 +132,7 @@ class Settings extends Component {
                                 disabled={this.state.running}
                                 min={this.props.board.current.minSize}
                                 max={this.props.board.current.maxSize}
-                                defaultValue={this.props.board.current.size}
+                                defaultValue={this.props.board.current.minSize}
                                 onPointerUp={(ev) => this.boardSizeChanged(ev)}
                                 onMouseUp={(ev) => this.boardSizeChanged(ev)}
                             />
@@ -138,10 +152,11 @@ class Settings extends Component {
                         <FormRange
                             ref={this.speedRangeRef}
                             id="speed"
+                            min={1}
                             max={100}
                         />
                     </FormGroup>
-                    {this.props.boardMounted &&
+                    {this.props.boardComponentMounted &&
                         <Col
                             xs={7}
                             lg={true}
@@ -152,7 +167,8 @@ class Settings extends Component {
                                 algorithm={this.algorithm}
                                 running={this.state.running}
                                 board={this.props.board}
-                                boardSize={this.props.board.current.size}
+                                boardSize={this.state.boardSize}
+                                getSleepMS={this.getSleepMS}
                             />
                         </Col>
                     }
