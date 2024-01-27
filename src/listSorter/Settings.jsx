@@ -10,7 +10,7 @@ class Settings extends Component {
         super();
         this.state = {
             running: false,
-            algorithmIndex: 0
+            algorithmIndex: 3
         };
         this._algorithms = [
             "Insertion Sort",
