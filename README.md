@@ -1,4 +1,4 @@
-# Sorting visualiser
+# Sorting visualizer
 
 ## How to use it
 1. Choose an algorithm.
