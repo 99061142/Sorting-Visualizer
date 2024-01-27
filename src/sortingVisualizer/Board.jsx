@@ -17,7 +17,7 @@ class Board extends Component {
         this.size = this.props.initSize || Math.floor(this.maxSize * .1);
 
         //! Set the BoardComponentMounted state to "true".
-        //! This is needed for size range inside the Settings component. 
+        //! This is needed for size range inside the Settings component.
         //! The range uses the Board class functionality, and must render AFTER the board was mounted
         this.props.setBoardComponentMounted(true);
     }
@@ -29,9 +29,8 @@ class Board extends Component {
 
         // Create a list with references for the Cells components that gets rendered with this list
         let cells = [];
-        for (let i = 0; i < size; i++) {
+        for (let i = 0; i < size; i++)
             cells.push(createRef(null));
-        }
 
         // Set the new size and cells references
         this.setState({
@@ -81,9 +80,8 @@ class Board extends Component {
 
     clear() {
         // Clear the type of the cells
-        for (const cell of this.cells) {
+        for (const cell of this.cells)
             cell.current.type = '';
-        }
     }
 
     randomize() {
@@ -91,9 +89,8 @@ class Board extends Component {
         this.clear();
 
         // Randomize every cell number
-        for (const cell of this.cells) {
+        for (const cell of this.cells)
             cell.current.randomizeNumber();
-        }
     }
 
     render() {
