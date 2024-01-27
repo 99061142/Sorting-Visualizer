@@ -8,6 +8,7 @@ class Cell extends Component {
             type: '',
             number: 0
         };
+        // Element reference to animate the algorithm when needed
         this.ref = createRef(null);
     }
 
@@ -21,7 +22,7 @@ class Cell extends Component {
 
     get randomNumber() {
         // Return a random number between min and max.
-        // Max value can't be higher than the calculation: window inner height - board top
+        //! Max value can't be higher than the calculation: window inner height - board top
         const max = window.innerHeight - this.props.boardTop;
         const min = 50;
         const randomNumber = Math.floor(Math.random() * (max - min) + min);
