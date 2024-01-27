@@ -6,6 +6,7 @@ import InsertionSort from "./algorithms/insertionSort";
 import BubbleSort from "./algorithms/bubbleSort";
 import SelectionSort from "./algorithms/selectionSort";
 import MergeSort from "./algorithms/mergeSort";
+import BogoSort from "./algorithms/bogoSort";
 
 class Run extends Component {
     get algorithm() {
@@ -20,6 +21,8 @@ class Run extends Component {
                 return SelectionSort
             case "merge-sort":
                 return MergeSort
+            case "bogo-sort":
+                return BogoSort
             default:
                 throw Error(`"${this.props.algorithm}" isn't an optional algorithm`);
         }
@@ -34,10 +37,9 @@ class Run extends Component {
 
         // Run the algorithm
         await new this.algorithm({
-            speedRangeRef: this.props.speedRangeRef,
+            getSleepMS: this.props.getSleepMS,
             cells: board.cells,
             boardSize: board.size,
-            algorithm: this.props.algorithm, // for testing purposes
             board
         }).run();
 
