@@ -6,20 +6,20 @@ class App extends Component {
     constructor() {
         super();
         this.state = {
-            settingsComponentMounted: false
+            boardComponentMounted: false
         }
         this.settings = createRef(null);
         this.board = createRef(null);
     }
 
-    setSettingsComponentMounted = (bool) => {
+    setBoardComponentMounted = (bool) => {
         this.setState({
-            settingsComponentMounted: bool
+            boardComponentMounted: bool
         });
     }
 
-    get settingsComponentMounted() {
-        const settingsComponentMounted = this.state.settingsComponentMounted;
+    get boardComponentMounted() {
+        const settingsComponentMounted = this.state.boardComponentMounted;
         return settingsComponentMounted
     }
     
@@ -29,14 +29,13 @@ class App extends Component {
                 <Settings
                     ref={this.settings}
                     board={this.board}
-                    setSettingsComponentMounted={this.setSettingsComponentMounted}
+                    boardComponentMounted={this.boardComponentMounted}
                 />
-                {this.state.settingsComponentMounted &&
-                    <Board
-                        ref={this.board}    
-                        settings={this.settings}
-                    />
-                }
+                <Board
+                    ref={this.board}    
+                    settings={this.settings}
+                    setBoardComponentMounted={this.setBoardComponentMounted}
+                />
             </>
         )
     }
