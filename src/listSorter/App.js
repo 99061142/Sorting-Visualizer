@@ -7,7 +7,7 @@ class App extends Component {
         super();
         this.state = {
             boardComponentMounted: false
-        }
+        };
         this.settings = createRef(null);
         this.board = createRef(null);
     }
