@@ -132,7 +132,6 @@ class Settings extends Component {
                                 disabled={this.state.running}
                                 min={this.props.board.current.minSize}
                                 max={this.props.board.current.maxSize}
-                                defaultValue={this.props.board.current.minSize}
                                 onPointerUp={(ev) => this.boardSizeChanged(ev)}
                                 onMouseUp={(ev) => this.boardSizeChanged(ev)}
                             />
