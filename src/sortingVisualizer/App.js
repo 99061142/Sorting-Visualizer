@@ -8,7 +8,6 @@ class App extends Component {
         this.state = {
             boardComponentMounted: false
         };
-        this.settings = createRef(null);
         this.board = createRef(null);
     }
 
@@ -27,13 +26,11 @@ class App extends Component {
         return (
             <>
                 <Settings
-                    ref={this.settings}
                     board={this.board}
                     boardComponentMounted={this.boardComponentMounted}
                 />
                 <Board
-                    ref={this.board}    
-                    settings={this.settings}
+                    ref={this.board}
                     setBoardComponentMounted={this.setBoardComponentMounted}
                 />
             </>
