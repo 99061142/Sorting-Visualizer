@@ -14,7 +14,7 @@ class Board extends Component {
 
     componentDidMount() {
         // Set the init board size
-        this.size = this.props.initSize || Math.floor(this.maxSize * .1);
+        this.size = this.props.initSize || (Math.floor(this.maxSize * .5) >= this.minSize) ? Math.floor(this.maxSize * .5) : this.minSize;
 
         //! Set the BoardComponentMounted state to "true".
         //! This is needed for size range inside the Settings component.
