@@ -34,17 +34,17 @@ class Animations extends Component {
     }
 
     async setType(animation) {
-        const { i, type } = animation
+        const { index, type } = animation;
 
         // Set the cell type
-        const cell = this.cell(i);
+        const cell = this.cell(index);
         cell.type = type;
 
         // If the cell got the type "selected", set the selectedIndex class var to the cell index
         if (type === "selected") 
-            this.selectedIndex = i;
+            this.selectedIndex = index;
 
-        await this.sleep()
+        await this.sleep();
     }
 
     cellElement(i) {
@@ -101,7 +101,7 @@ class Animations extends Component {
         // If the cell elements must be animated to move
         if (elementMustAnimate)
             await this.swapTransformation(from, to);
-        
+
         // Swap the cell element numbers
         await this.swapCellNumbers(from, to);
     }
