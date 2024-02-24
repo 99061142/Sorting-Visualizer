@@ -4,8 +4,6 @@
 	http://jedwatson.github.io/classnames
 */
 
-/*! regenerator-runtime -- Copyright (c) 2014-present, Facebook, Inc. -- license (MIT): https://github.com/facebook/regenerator/blob/main/LICENSE */
-
 /**
  * @license React
  * react-dom.production.min.js
@@ -45,3 +43,11 @@
  * This source code is licensed under the MIT license found in the
  * LICENSE file in the root directory of this source tree.
  */
+
+//! Max value can't be higher than the calculation: window inner height - board top
+
+//! Set the BoardComponentMounted state to "true".
+
+//! The range uses the Board class functionality, and must render AFTER the board was mounted
+
+//! This is needed for size range inside the Settings component.
