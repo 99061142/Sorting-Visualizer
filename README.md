@@ -1,4 +1,5 @@
 # Sorting visualizer
+https://99061142.github.io/Sorting-Visualizer
 
 ## How to use it
 1. Choose an algorithm.
